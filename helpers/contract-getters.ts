@@ -1,5 +1,6 @@
 import { getFirstSigner } from "./utilities/signer";
 import {
+  IBlast,
   MockAggregator,
   PacPoolWrapper,
   StakedTokenTransferStrategy,
@@ -155,6 +156,9 @@ export const getPacPoolWrapper = async (
     "PacPoolWrapper",
     address || (await hre.deployments.get(PAC_POOL_WRAPPER)).address
   );
+
+export const getBlast = async (address: tEthereumAddress): Promise<IBlast> =>
+  getContract("IBlast", address);
 
 export const getPriceOracle = async (
   address?: tEthereumAddress
