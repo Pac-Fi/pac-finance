@@ -1,4 +1,4 @@
-import { EmissionManager } from "./../typechain";
+import { EmissionManager, UniswapV2OracleWrapper } from "./../typechain";
 import { MockL2Pool } from "./../typechain";
 import { EMPTY_STORAGE_SLOT, ZERO_ADDRESS } from "./constants";
 import { StakedAave } from "./../typechain";
@@ -61,6 +61,15 @@ import {
 
 // Prevent error HH9 when importing this file inside tasks or helpers at Hardhat config load
 declare var hre: HardhatRuntimeEnvironment;
+
+export const deployUniswapV2OracleWrapper = async (
+  asset: string,
+  addressProvider: string
+) =>
+  await deployContract<UniswapV2OracleWrapper>("UniswapV2OracleWrapper", [
+    asset,
+    addressProvider,
+  ]);
 
 export const deployUiIncentiveDataProvider =
   async (): Promise<UiIncentiveDataProviderV3> =>
