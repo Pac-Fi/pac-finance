@@ -17,6 +17,7 @@ import {EIP712Base} from "./base/EIP712Base.sol";
 import {IBlast} from "../../../../interfaces/IBlast.sol";
 import {IERC20Rebasing} from "../../../../interfaces/IERC20Rebasing.sol";
 import {INativeYieldDistribute} from "../../../../interfaces/INativeYieldDistribute.sol";
+import {IBlastPoints} from "../../../../interfaces/IBlastPoints.sol";
 
 /**
  * @title Aave ERC20 AToken
@@ -40,7 +41,7 @@ contract AToken is
             "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"
         );
 
-    uint256 public constant ATOKEN_REVISION = 0x1;
+    uint256 public constant ATOKEN_REVISION = 0x2;
 
     address internal _treasury;
     address internal _underlyingAsset;
@@ -85,10 +86,6 @@ contract AToken is
         _incentivesController = incentivesController;
 
         _domainSeparator = _calculateDomainSeparator();
-
-        if (BLAST != address(0)) {
-            IBlast(BLAST).configureClaimableGas();
-        }
 
         emit Initialized(
             underlyingAsset,
@@ -351,14 +348,25 @@ contract AToken is
         IERC20(token).safeTransfer(to, amount);
     }
 
+    function configureBlast(
+        address blastPoints,
+        address pointsOperator
+    ) external onlyPoolAdmin {
+        if (BLAST != address(0)) {
+            IBlast(BLAST).configureClaimableGas();
+            IBlast(BLAST).configureClaimableYield();
+        }
+        IBlastPoints(blastPoints).configurePointsOperator(pointsOperator);
+    }
+
     function claimRefundedGas(address recipient) external onlyPool {
         IBlast(BLAST).claimMaxGas(address(this), recipient);
     }
 
     function claimYield(address recipient) external onlyPoolAdmin {
-        IERC20Rebasing rebase = IERC20Rebasing(_underlyingAsset);
-        uint256 balance = rebase.getClaimableAmount(address(this));
-        rebase.claim(recipient, balance);
+        if (BLAST != address(0)) {
+            IBlast(BLAST).claimAllYield(address(this), recipient);
+        }
     }
 
     function _notifyBalanceChange(address user) internal {
