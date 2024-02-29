@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.10;
 
-enum YieldMode {
-    AUTOMATIC,
-    VOID,
-    CLAIMABLE
-}
-
 interface IERC20Rebasing {
+    enum YieldMode {
+        AUTOMATIC,
+        VOID,
+        CLAIMABLE
+    }
+
     // changes the yield mode of the caller and update the balance
     // to reflect the configuration
     function configure(YieldMode) external returns (uint256);
@@ -21,4 +21,6 @@ interface IERC20Rebasing {
     function getClaimableAmount(
         address account
     ) external view returns (uint256);
+
+    function getConfiguration(address account) external view returns (YieldMode);
 }

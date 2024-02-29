@@ -154,12 +154,14 @@ interface IAToken is IERC20, IScaledBalanceToken, IInitializableAToken {
      */
     function rescueTokens(address token, address to, uint256 amount) external;
 
+    function configureClaimableYield() external;
+
     /**
-     * @notice Configure blast gas mode, yield mode and point operator
+     * @notice Configure blast point operator
      * @param blastPoints The address of BlastPoints
      * @param pointsOperator The address of the point operator
      */
-    function configureBlast(
+    function configurePointOperator(
         address blastPoints,
         address pointsOperator
     ) external;

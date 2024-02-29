@@ -41,7 +41,7 @@ contract AToken is
             "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"
         );
 
-    uint256 public constant ATOKEN_REVISION = 0x2;
+    uint256 public constant ATOKEN_REVISION = 0x1;
 
     address internal _treasury;
     address internal _underlyingAsset;
@@ -86,6 +86,10 @@ contract AToken is
         _incentivesController = incentivesController;
 
         _domainSeparator = _calculateDomainSeparator();
+
+        if (BLAST != address(0)) {
+            IBlast(BLAST).configureClaimableGas();
+        }
 
         emit Initialized(
             underlyingAsset,
@@ -348,14 +352,15 @@ contract AToken is
         IERC20(token).safeTransfer(to, amount);
     }
 
-    function configureBlast(
+    function configureClaimableYield() external onlyPoolAdmin {
+        IERC20Rebasing rebase = IERC20Rebasing(_underlyingAsset);
+        rebase.configure(IERC20Rebasing.YieldMode.CLAIMABLE);
+    }
+
+    function configurePointOperator(
         address blastPoints,
         address pointsOperator
     ) external onlyPoolAdmin {
-        if (BLAST != address(0)) {
-            IBlast(BLAST).configureClaimableGas();
-            IBlast(BLAST).configureClaimableYield();
-        }
         IBlastPoints(blastPoints).configurePointsOperator(pointsOperator);
     }
 
@@ -364,9 +369,9 @@ contract AToken is
     }
 
     function claimYield(address recipient) external onlyPoolAdmin {
-        if (BLAST != address(0)) {
-            IBlast(BLAST).claimAllYield(address(this), recipient);
-        }
+        IERC20Rebasing rebase = IERC20Rebasing(_underlyingAsset);
+        uint256 balance = rebase.getClaimableAmount(address(this));
+        rebase.claim(recipient, balance);
     }
 
     function _notifyBalanceChange(address user) internal {

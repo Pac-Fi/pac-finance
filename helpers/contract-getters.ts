@@ -1,7 +1,9 @@
 import { getFirstSigner } from "./utilities/signer";
 import {
-  IBlast,
+  GasRefund,
+  IBlast, IERC20Rebasing,
   MockAggregator,
+  NativeYieldDistribute,
   PacPoolWrapper,
   StakedTokenTransferStrategy,
 } from "./../typechain";
@@ -61,6 +63,8 @@ import {
   L2_ENCODER,
   FAUCET_OWNABLE_ID,
   PAC_POOL_WRAPPER,
+  GAS_REFUND,
+  Native_Yield_Distribute,
 } from "./deploy-ids";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { RewardsController } from "../typechain";
@@ -149,6 +153,22 @@ export const getPool = async (address?: tEthereumAddress): Promise<Pool> =>
     address || (await hre.deployments.get(POOL_PROXY_ID)).address
   );
 
+export const getGasRefund = async (
+  address?: tEthereumAddress
+): Promise<GasRefund> =>
+  getContract(
+    "GasRefund",
+    address || (await hre.deployments.get(GAS_REFUND)).address
+  );
+
+export const getNativeYieldDistribute = async (
+  address?: tEthereumAddress
+): Promise<NativeYieldDistribute> =>
+  getContract(
+    "NativeYieldDistribute",
+    address || (await hre.deployments.get(Native_Yield_Distribute)).address
+  );
+
 export const getPacPoolWrapper = async (
   address?: tEthereumAddress
 ): Promise<PacPoolWrapper> =>
@@ -159,6 +179,10 @@ export const getPacPoolWrapper = async (
 
 export const getBlast = async (address: tEthereumAddress): Promise<IBlast> =>
   getContract("IBlast", address);
+
+export const getRebasingERC20 = async (
+  address: tEthereumAddress
+): Promise<IERC20Rebasing> => getContract("IERC20Rebasing", address);
 
 export const getPriceOracle = async (
   address?: tEthereumAddress
