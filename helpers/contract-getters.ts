@@ -1,7 +1,10 @@
 import { getFirstSigner } from "./utilities/signer";
 import {
   GasRefund,
-  IBlast, IERC20Rebasing,
+  IBlast,
+  ICLSynchronicityPriceAdapter,
+  IERC20Rebasing,
+  IPyth,
   MockAggregator,
   NativeYieldDistribute,
   PacPoolWrapper,
@@ -179,6 +182,14 @@ export const getPacPoolWrapper = async (
 
 export const getBlast = async (address: tEthereumAddress): Promise<IBlast> =>
   getContract("IBlast", address);
+
+export const getPYTH = async (address: tEthereumAddress): Promise<IPyth> =>
+  getContract("IPyth", address);
+
+export const getOracleAdapter = async (
+  address: tEthereumAddress
+): Promise<ICLSynchronicityPriceAdapter> =>
+  getContract("ICLSynchronicityPriceAdapter", address);
 
 export const getRebasingERC20 = async (
   address: tEthereumAddress

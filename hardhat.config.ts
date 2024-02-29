@@ -124,10 +124,6 @@ export default {
       eArbitrumNetwork.goerliNitro,
       421613
     ),
-    // [eParallelNetwork.devL3]: getCommonNetworkConfig(
-    //   eParallelNetwork.devL3,
-    //   31337
-    // ),
     [eParallelNetwork.devL3]: getCommonNetworkConfig(
       eParallelNetwork.devL3,
       3163830386846714
@@ -141,7 +137,7 @@ export default {
       eMantaNetwork.testnet,
       3441005
     ),
-    [eBlastNetwork.main]: getCommonNetworkConfig(eBlastNetwork.main, 0),
+    [eBlastNetwork.main]: getCommonNetworkConfig(eBlastNetwork.main, 81457),
     [eBlastNetwork.testnet]: getCommonNetworkConfig(
       eBlastNetwork.testnet,
       168587773

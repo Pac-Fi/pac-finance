@@ -1,0 +1,112 @@
+{
+  "address": "0x1a8476F94F5d1351a3BE93b2A2437f750f9343d9",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "pyth",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "feedId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "expirationPeriod",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "_decimals",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "DecimalsAboveLimit",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "DecimalsNotEqual",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "latestAnswer",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x5914938529fb1535297549c18ad82a81aee2c55299cc549e62a5037ba1953366",
+  "receipt": {
+    "to": null,
+    "from": "0x185782Ee7Cf9A91cc2dFb6F5cc695dD02284b899",
+    "contractAddress": "0x1a8476F94F5d1351a3BE93b2A2437f750f9343d9",
+    "transactionIndex": 1,
+    "gasUsed": "198571",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x1e358d38b52d5dcc7b6555ba1881dd08a8d3eb68854941cfbfdbb2adc5b87356",
+    "transactionHash": "0x5914938529fb1535297549c18ad82a81aee2c55299cc549e62a5037ba1953366",
+    "logs": [],
+    "blockNumber": 189490,
+    "cumulativeGasUsed": "245528",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729",
+    "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace",
+    "86400",
+    "8"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "29775e3a00529988a57e6bb68da55c77",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"pyth\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"feedId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"expirationPeriod\",\"type\":\"uint256\"},{\"internalType\":\"uint8\",\"name\":\"_decimals\",\"type\":\"uint8\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"DecimalsAboveLimit\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"DecimalsNotEqual\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestAnswer\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"latestAnswer()\":{\"notice\":\"Calculates the current answer based on the aggregators.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/ERC20OracleWrapper.sol\":\"ERC20OracleWrapper\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":100000},\"remappings\":[]},\"sources\":{\"contracts/ERC20OracleWrapper.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\npragma solidity ^0.8.0;\\n\\nimport {IPyth} from \\\"./interfaces/IPyth.sol\\\";\\nimport {ICLSynchronicityPriceAdapter} from \\\"./interfaces/ICLSynchronicityPriceAdapter.sol\\\";\\n\\ncontract ERC20OracleWrapper is ICLSynchronicityPriceAdapter {\\n    IPyth internal immutable PYTH;\\n    bytes32 internal immutable FEED_ID;\\n    uint256 internal immutable EXPIRATION_PERIOD;\\n    uint8 internal immutable DECIMALS;\\n\\n    constructor(\\n        address pyth,\\n        bytes32 feedId,\\n        uint256 expirationPeriod,\\n        uint8 _decimals\\n    ) {\\n        PYTH = IPyth(pyth);\\n        FEED_ID = feedId;\\n        EXPIRATION_PERIOD = expirationPeriod;\\n        DECIMALS = _decimals;\\n    }\\n\\n    /// @inheritdoc ICLSynchronicityPriceAdapter\\n    function latestAnswer() public view virtual override returns (int256) {\\n        return PYTH.getPriceNoOlderThan(FEED_ID, EXPIRATION_PERIOD).price;\\n    }\\n\\n    function decimals() external view returns (uint8) {\\n        return DECIMALS;\\n    }\\n}\\n\",\"keccak256\":\"0xbe0748d4f9624ad8d4c537fc628315e0bb0fed8b4d2031e16ee937cbd1d9f3c6\",\"license\":\"BUSL-1.1\"},\"contracts/interfaces/ICLSynchronicityPriceAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ninterface ICLSynchronicityPriceAdapter {\\n    /**\\n     * @notice Calculates the current answer based on the aggregators.\\n     */\\n    function latestAnswer() external view returns (int256);\\n\\n    error DecimalsAboveLimit();\\n    error DecimalsNotEqual();\\n}\\n\",\"keccak256\":\"0x87a1d48750e707ff0956ddfd5ab87494eadea3085b8f2df175478b8735cb302b\",\"license\":\"MIT\"},\"contracts/interfaces/IPyth.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\npragma solidity ^0.8.0;\\n\\ncontract PythStructs {\\n    // A price with a degree of uncertainty, represented as a price +- a confidence interval.\\n    //\\n    // The confidence interval roughly corresponds to the standard error of a normal distribution.\\n    // Both the price and confidence are stored in a fixed-point numeric representation,\\n    // `x * (10^expo)`, where `expo` is the exponent.\\n    //\\n    // Please refer to the documentation at https://docs.pyth.network/consumers/best-practices for how\\n    // to how this price safely.\\n    struct Price {\\n        // Price\\n        int64 price;\\n        // Confidence interval around the price\\n        uint64 conf;\\n        // Price exponent\\n        int32 expo;\\n        // Unix timestamp describing when the price was published\\n        uint publishTime;\\n    }\\n\\n    // PriceFeed represents a current aggregate price from pyth publisher feeds.\\n    struct PriceFeed {\\n        // The price ID.\\n        bytes32 id;\\n        // Latest available price\\n        Price price;\\n        // Latest available exponentially-weighted moving average price\\n        Price emaPrice;\\n    }\\n}\\n\\n/// @title IPythEvents contains the events that Pyth contract emits.\\n/// @dev This interface can be used for listening to the updates for off-chain and testing purposes.\\ninterface IPythEvents {\\n    /// @dev Emitted when the price feed with `id` has received a fresh update.\\n    /// @param id The Pyth Price Feed ID.\\n    /// @param publishTime Publish time of the given price update.\\n    /// @param price Price of the given price update.\\n    /// @param conf Confidence interval of the given price update.\\n    event PriceFeedUpdate(\\n        bytes32 indexed id,\\n        uint64 publishTime,\\n        int64 price,\\n        uint64 conf\\n    );\\n\\n    /// @dev Emitted when a batch price update is processed successfully.\\n    /// @param chainId ID of the source chain that the batch price update comes from.\\n    /// @param sequenceNumber Sequence number of the batch price update.\\n    event BatchPriceFeedUpdate(uint16 chainId, uint64 sequenceNumber);\\n}\\n\\n/// @title Consume prices from the Pyth Network (https://pyth.network/).\\n/// @dev Please refer to the guidance at https://docs.pyth.network/consumers/best-practices for how to consume prices safely.\\n/// @author Pyth Data Association\\ninterface IPyth is IPythEvents {\\n    /// @notice Returns the period (in seconds) that a price feed is considered valid since its publish time\\n    function getValidTimePeriod() external view returns (uint validTimePeriod);\\n\\n    /// @notice Returns the price and confidence interval.\\n    /// @dev Reverts if the price has not been updated within the last `getValidTimePeriod()` seconds.\\n    /// @param id The Pyth Price Feed ID of which to fetch the price and confidence interval.\\n    /// @return price - please read the documentation of PythStructs.Price to understand how to use this safely.\\n    function getPrice(\\n        bytes32 id\\n    ) external view returns (PythStructs.Price memory price);\\n\\n    /// @notice Returns the exponentially-weighted moving average price and confidence interval.\\n    /// @dev Reverts if the EMA price is not available.\\n    /// @param id The Pyth Price Feed ID of which to fetch the EMA price and confidence interval.\\n    /// @return price - please read the documentation of PythStructs.Price to understand how to use this safely.\\n    function getEmaPrice(\\n        bytes32 id\\n    ) external view returns (PythStructs.Price memory price);\\n\\n    /// @notice Returns the price of a price feed without any sanity checks.\\n    /// @dev This function returns the most recent price update in this contract without any recency checks.\\n    /// This function is unsafe as the returned price update may be arbitrarily far in the past.\\n    ///\\n    /// Users of this function should check the `publishTime` in the price to ensure that the returned price is\\n    /// sufficiently recent for their application. If you are considering using this function, it may be\\n    /// safer / easier to use either `getPrice` or `getPriceNoOlderThan`.\\n    /// @return price - please read the documentation of PythStructs.Price to understand how to use this safely.\\n    function getPriceUnsafe(\\n        bytes32 id\\n    ) external view returns (PythStructs.Price memory price);\\n\\n    /// @notice Returns the price that is no older than `age` seconds of the current time.\\n    /// @dev This function is a sanity-checked version of `getPriceUnsafe` which is useful in\\n    /// applications that require a sufficiently-recent price. Reverts if the price wasn't updated sufficiently\\n    /// recently.\\n    /// @return price - please read the documentation of PythStructs.Price to understand how to use this safely.\\n    function getPriceNoOlderThan(\\n        bytes32 id,\\n        uint age\\n    ) external view returns (PythStructs.Price memory price);\\n\\n    /// @notice Returns the exponentially-weighted moving average price of a price feed without any sanity checks.\\n    /// @dev This function returns the same price as `getEmaPrice` in the case where the price is available.\\n    /// However, if the price is not recent this function returns the latest available price.\\n    ///\\n    /// The returned price can be from arbitrarily far in the past; this function makes no guarantees that\\n    /// the returned price is recent or useful for any particular application.\\n    ///\\n    /// Users of this function should check the `publishTime` in the price to ensure that the returned price is\\n    /// sufficiently recent for their application. If you are considering using this function, it may be\\n    /// safer / easier to use either `getEmaPrice` or `getEmaPriceNoOlderThan`.\\n    /// @return price - please read the documentation of PythStructs.Price to understand how to use this safely.\\n    function getEmaPriceUnsafe(\\n        bytes32 id\\n    ) external view returns (PythStructs.Price memory price);\\n\\n    /// @notice Returns the exponentially-weighted moving average price that is no older than `age` seconds\\n    /// of the current time.\\n    /// @dev This function is a sanity-checked version of `getEmaPriceUnsafe` which is useful in\\n    /// applications that require a sufficiently-recent price. Reverts if the price wasn't updated sufficiently\\n    /// recently.\\n    /// @return price - please read the documentation of PythStructs.Price to understand how to use this safely.\\n    function getEmaPriceNoOlderThan(\\n        bytes32 id,\\n        uint age\\n    ) external view returns (PythStructs.Price memory price);\\n\\n    /// @notice Update price feeds with given update messages.\\n    /// This method requires the caller to pay a fee in wei; the required fee can be computed by calling\\n    /// `getUpdateFee` with the length of the `updateData` array.\\n    /// Prices will be updated if they are more recent than the current stored prices.\\n    /// The call will succeed even if the update is not the most recent.\\n    /// @dev Reverts if the transferred fee is not sufficient or the updateData is invalid.\\n    /// @param updateData Array of price update data.\\n    function updatePriceFeeds(bytes[] calldata updateData) external payable;\\n\\n    /// @notice Wrapper around updatePriceFeeds that rejects fast if a price update is not necessary. A price update is\\n    /// necessary if the current on-chain publishTime is older than the given publishTime. It relies solely on the\\n    /// given `publishTimes` for the price feeds and does not read the actual price update publish time within `updateData`.\\n    ///\\n    /// This method requires the caller to pay a fee in wei; the required fee can be computed by calling\\n    /// `getUpdateFee` with the length of the `updateData` array.\\n    ///\\n    /// `priceIds` and `publishTimes` are two arrays with the same size that correspond to senders known publishTime\\n    /// of each priceId when calling this method. If all of price feeds within `priceIds` have updated and have\\n    /// a newer or equal publish time than the given publish time, it will reject the transaction to save gas.\\n    /// Otherwise, it calls updatePriceFeeds method to update the prices.\\n    ///\\n    /// @dev Reverts if update is not needed or the transferred fee is not sufficient or the updateData is invalid.\\n    /// @param updateData Array of price update data.\\n    /// @param priceIds Array of price ids.\\n    /// @param publishTimes Array of publishTimes. `publishTimes[i]` corresponds to known `publishTime` of `priceIds[i]`\\n    function updatePriceFeedsIfNecessary(\\n        bytes[] calldata updateData,\\n        bytes32[] calldata priceIds,\\n        uint64[] calldata publishTimes\\n    ) external payable;\\n\\n    /// @notice Returns the required fee to update an array of price updates.\\n    /// @param updateData Array of price update data.\\n    /// @return feeAmount The required fee in Wei.\\n    function getUpdateFee(\\n        bytes[] calldata updateData\\n    ) external view returns (uint feeAmount);\\n\\n    /// @notice Parse `updateData` and return price feeds of the given `priceIds` if they are all published\\n    /// within `minPublishTime` and `maxPublishTime`.\\n    ///\\n    /// You can use this method if you want to use a Pyth price at a fixed time and not the most recent price;\\n    /// otherwise, please consider using `updatePriceFeeds`. This method does not store the price updates on-chain.\\n    ///\\n    /// This method requires the caller to pay a fee in wei; the required fee can be computed by calling\\n    /// `getUpdateFee` with the length of the `updateData` array.\\n    ///\\n    ///\\n    /// @dev Reverts if the transferred fee is not sufficient or the updateData is invalid or there is\\n    /// no update for any of the given `priceIds` within the given time range.\\n    /// @param updateData Array of price update data.\\n    /// @param priceIds Array of price ids.\\n    /// @param minPublishTime minimum acceptable publishTime for the given `priceIds`.\\n    /// @param maxPublishTime maximum acceptable publishTime for the given `priceIds`.\\n    /// @return priceFeeds Array of the price feeds corresponding to the given `priceIds` (with the same order).\\n    function parsePriceFeedUpdates(\\n        bytes[] calldata updateData,\\n        bytes32[] calldata priceIds,\\n        uint64 minPublishTime,\\n        uint64 maxPublishTime\\n    ) external payable returns (PythStructs.PriceFeed[] memory priceFeeds);\\n}\\n\",\"keccak256\":\"0xb5b5ea6e266068c2bca08c5617cd3cb9721f64109fb1933d314ffb0cdcb9d576\",\"license\":\"BUSL-1.1\"}},\"version\":1}",
+  "bytecode": "0x61010060405234801561001157600080fd5b5060405161037a38038061037a83398101604081905261003091610052565b6001600160a01b0390931660805260a09190915260c05260ff1660e0526100b0565b6000806000806080858703121561006857600080fd5b84516001600160a01b038116811461007f57600080fd5b809450506020850151925060408501519150606085015160ff811681146100a557600080fd5b939692955090935050565b60805160a05160c05160e0516102956100e5600039600060420152600060d50152600060af0152600060fe01526102956000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c8063313ce5671461003b57806350d25bcd14610071575b600080fd5b60405160ff7f00000000000000000000000000000000000000000000000000000000000000001681526020015b60405180910390f35b610079610087565b604051908152602001610068565b6040517fa4ae35e00000000000000000000000000000000000000000000000000000000081527f000000000000000000000000000000000000000000000000000000000000000060048201527f000000000000000000000000000000000000000000000000000000000000000060248201526000907f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff169063a4ae35e090604401608060405180830381865afa15801561015a573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061017e91906101b6565b5160070b919050565b805167ffffffffffffffff8116811461019f57600080fd5b919050565b8051600381900b811461019f57600080fd5b6000608082840312156101c857600080fd5b6040516080810181811067ffffffffffffffff82111715610212577f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6040528251600781900b811461022757600080fd5b815261023560208401610187565b6020820152610246604084016101a4565b604082015260608301516060820152809150509291505056fea26469706673582212207667da75f3dab0e73d8a4004c6dc04da8a077e716d6ae2497aae261e8eb8703d64736f6c634300080a0033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100365760003560e01c8063313ce5671461003b57806350d25bcd14610071575b600080fd5b60405160ff7f00000000000000000000000000000000000000000000000000000000000000001681526020015b60405180910390f35b610079610087565b604051908152602001610068565b6040517fa4ae35e00000000000000000000000000000000000000000000000000000000081527f000000000000000000000000000000000000000000000000000000000000000060048201527f000000000000000000000000000000000000000000000000000000000000000060248201526000907f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff169063a4ae35e090604401608060405180830381865afa15801561015a573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061017e91906101b6565b5160070b919050565b805167ffffffffffffffff8116811461019f57600080fd5b919050565b8051600381900b811461019f57600080fd5b6000608082840312156101c857600080fd5b6040516080810181811067ffffffffffffffff82111715610212577f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6040528251600781900b811461022757600080fd5b815261023560208401610187565b6020820152610246604084016101a4565b604082015260608301516060820152809150509291505056fea26469706673582212207667da75f3dab0e73d8a4004c6dc04da8a077e716d6ae2497aae261e8eb8703d64736f6c634300080a0033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "latestAnswer()": {
+        "notice": "Calculates the current answer based on the aggregators."
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

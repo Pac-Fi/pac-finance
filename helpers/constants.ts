@@ -52,6 +52,7 @@ export const WRAPPED_NATIVE_TOKEN_PER_NETWORK: { [network: string]: string } = {
   [eMantaNetwork.testnet]: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19", //self deployed
   [eMantaNetwork.main]: "0x0Dc808adcE2099A9F62AA87D9670745AbA741746",
   [eBlastNetwork.testnet]: "0x4200000000000000000000000000000000000023",
+  [eBlastNetwork.main]: "0x4300000000000000000000000000000000000004",
 };
 
 export const ZERO_BYTES_32 =
@@ -115,6 +116,7 @@ export const chainlinkAggregatorProxy: Record<string, string> = {
   [eMantaNetwork.testnet]: "0x447eBcEa8371bf82269E6734fb71EA026D21A40E",
   [eMantaNetwork.main]: "0x14CdFdBAc7038196F26fea1c9384ce92363F31CE",
   [eBlastNetwork.testnet]: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",
+  [eBlastNetwork.main]: "0x1a8476F94F5d1351a3BE93b2A2437f750f9343d9",
 };
 
 export const chainlinkEthUsdAggregatorProxy: Record<string, string> = {
@@ -143,6 +145,7 @@ export const chainlinkEthUsdAggregatorProxy: Record<string, string> = {
   [eMantaNetwork.testnet]: "0x447eBcEa8371bf82269E6734fb71EA026D21A40E",
   [eMantaNetwork.main]: "0x14CdFdBAc7038196F26fea1c9384ce92363F31CE",
   [eBlastNetwork.testnet]: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",
+  [eBlastNetwork.main]: "0x1a8476F94F5d1351a3BE93b2A2437f750f9343d9",
 };
 
 export const ETHEREUM_SHORT_EXECUTOR =

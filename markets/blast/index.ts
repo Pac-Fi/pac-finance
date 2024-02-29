@@ -26,7 +26,7 @@ export const BlastMarket: IAaveConfiguration = {
   VariableDebtTokenNamePrefix: "Parallel",
   OracleQuoteCurrency: "ETH",
   OracleQuoteUnit: "8",
-  SymbolPrefix: " ",
+  SymbolPrefix: "",
   ReservesConfig: {
     WETH: strategyWETH,
     USDB: strategyUSDB,
@@ -38,8 +38,8 @@ export const BlastMarket: IAaveConfiguration = {
   },
   ReserveAssets: {
     [eBlastNetwork.main]: {
-      WETH: "0x4200000000000000000000000000000000000023",
-      USDB: "0x4200000000000000000000000000000000000022",
+      WETH: "0x4300000000000000000000000000000000000004",
+      USDB: "0x4300000000000000000000000000000000000003",
     },
     [eBlastNetwork.testnet]: {
       WETH: "0x4200000000000000000000000000000000000023",
@@ -52,6 +52,10 @@ export const BlastMarket: IAaveConfiguration = {
     },
   },
   ChainlinkAggregator: {
+    [eBlastNetwork.main]: {
+      WETH: "0x1a8476F94F5d1351a3BE93b2A2437f750f9343d9",
+      USDB: "0xF04383ecA1D1E2eD99f18ef5cFe21d56fe74b036",
+    },
     [eBlastNetwork.testnet]: {
       WETH: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",
       USDB: "0x03419fa2f2307FBD999320CA519c6A7b3049c7f6",
