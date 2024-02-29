@@ -40,8 +40,10 @@ export const STAKE_AAVE_IMPL_V3 = `StakeAave-REV-3-${IMPL_ID}`;
 export const L2_ENCODER = "L2Encoder";
 export const FAUCET_OWNABLE_ID = `Faucet-${MARKET_NAME}`;
 export const PAC_POOL_WRAPPER = "PacPoolWrapper";
-export const GAS_REFUND = "GasRefund";
-export const Native_Yield_Distribute = "NativeYieldDistribute";
+export const GAS_REFUND_IMPL = "GasRefundImpl";
+export const GAS_REFUND_PROXY = "GasRefundProxy";
+export const Native_Yield_Distribute_IMPL = "NativeYieldDistributeImpl";
+export const Native_Yield_Distribute_Proxy = "NativeYieldDistributeProxy-";
 export const ERC20_Oracle_Wrapper = "ERC20OracleWrapper";
 export const Fixed_Price_Oracle_Wrapper =
   "CLFixedPriceSynchronicityPriceAdapter";

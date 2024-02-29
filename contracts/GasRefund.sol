@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.10;
 
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import {IGasRefund} from "./interfaces/IGasRefund.sol";
 import {PercentageMath} from "./core-v3/contracts/protocol/libraries/math/PercentageMath.sol";
+import {IBlast} from "./interfaces/IBlast.sol";
+import {PacPoolWrapper} from "./PacPoolWrapper.sol";
+import {IPool} from "./core-v3/contracts/interfaces/IPool.sol";
 
-contract GasRefund is Ownable {
+contract GasRefund is Initializable, OwnableUpgradeable {
     using PercentageMath for uint256;
 
     address public immutable POOL_WRAPPER;
+    address public immutable BLAST;
 
     mapping(address => uint256) private _balances;
     mapping(IGasRefund.RefundType => uint256) private _refundRatio;
@@ -24,15 +29,25 @@ contract GasRefund is Ownable {
         _;
     }
 
-    constructor(address _poolWrapper) {
+    constructor(address _poolWrapper, address _blast) {
         if (address(_poolWrapper) == address(0)) revert AddressZero();
 
         POOL_WRAPPER = _poolWrapper;
+        BLAST = _blast;
+    }
+
+    function initialize() public initializer {
+        __Ownable_init();
+
         _refundRatio[IGasRefund.RefundType.SUPPLY] = 7000;
         _refundRatio[IGasRefund.RefundType.WITHDRAW] = 8000;
         _refundRatio[IGasRefund.RefundType.BORROW] = 8000;
         _refundRatio[IGasRefund.RefundType.REPAY] = 7000;
         _refundRatio[IGasRefund.RefundType.LEVERAGEDEPOSIT] = 6000;
+
+        if (BLAST != address(0)) {
+            IBlast(BLAST).configureClaimableGas();
+        }
     }
 
     function gasBalance(address user) external view returns (uint256) {
@@ -64,10 +79,15 @@ contract GasRefund is Ownable {
         _refundRatio[refundType] = ratio;
     }
 
+    function claimRefundedGas(address recipient) external onlyOwner {
+        IBlast(BLAST).claimMaxGas(address(this), recipient);
+    }
+
     receive() external payable {}
 
     function _safeTransferETH(address to, uint256 value) internal {
         (bool success, ) = to.call{value: value}(new bytes(0));
         require(success, "ETH_TRANSFER_FAILED");
     }
+
 }

@@ -25,6 +25,7 @@ export const AaveMarket: IAaveConfiguration = {
     WETH: strategyWETH,
   },
   ReserveAssets: {},
+  upgradeAdmin: "0xf2B18c20Ed5E5a6ABB15377D619C1879639339AD",
 };
 
 export default AaveMarket;

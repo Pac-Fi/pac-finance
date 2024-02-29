@@ -66,8 +66,8 @@ import {
   L2_ENCODER,
   FAUCET_OWNABLE_ID,
   PAC_POOL_WRAPPER,
-  GAS_REFUND,
-  Native_Yield_Distribute,
+  GAS_REFUND_PROXY,
+  Native_Yield_Distribute_Proxy,
 } from "./deploy-ids";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { RewardsController } from "../typechain";
@@ -161,7 +161,7 @@ export const getGasRefund = async (
 ): Promise<GasRefund> =>
   getContract(
     "GasRefund",
-    address || (await hre.deployments.get(GAS_REFUND)).address
+    address || (await hre.deployments.get(GAS_REFUND_PROXY)).address
   );
 
 export const getNativeYieldDistribute = async (
@@ -169,7 +169,8 @@ export const getNativeYieldDistribute = async (
 ): Promise<NativeYieldDistribute> =>
   getContract(
     "NativeYieldDistribute",
-    address || (await hre.deployments.get(Native_Yield_Distribute)).address
+    address ||
+      (await hre.deployments.get(Native_Yield_Distribute_Proxy)).address
   );
 
 export const getPacPoolWrapper = async (

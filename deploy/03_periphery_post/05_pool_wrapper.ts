@@ -9,9 +9,17 @@ import {
   isTestnetMarket,
   PAC_POOL_WRAPPER,
   loadPoolConfig,
-  TESTNET_TOKEN_PREFIX, GAS_REFUND, PacPoolWrapper, waitForTx,
+  TESTNET_TOKEN_PREFIX,
+  PacPoolWrapper,
+  waitForTx,
+  GAS_REFUND_IMPL,
+  GAS_REFUND_PROXY,
+  GasRefund__factory,
+  getContract,
+  Native_Yield_Distribute_Proxy,
+  InitializableAdminUpgradeabilityProxy, getBlastContractAddress,
 } from "../../helpers";
-import {ethers} from "hardhat";
+import { ethers } from "hardhat";
 
 const func: DeployFunction = async function ({
   getNamedAccounts,
@@ -54,20 +62,44 @@ const func: DeployFunction = async function ({
 
   console.log("PacPoolWrapper deployed at:", LeverageDepositor.address);
 
-  const gasRefund = await deploy(GAS_REFUND, {
+  const blastAddress = getBlastContractAddress(hre.network.name);
+  const gasRefund = await deploy(GAS_REFUND_IMPL, {
     from: deployer,
     contract: "GasRefund",
-    args: [LeverageDepositor.address],
+    args: [LeverageDepositor.address, blastAddress],
     ...COMMON_DEPLOY_PARAMS,
   });
-  console.log("gasRefund deployed at:", gasRefund.address);
+  console.log("gasRefund IMPL deployed at:", gasRefund.address);
+
+  const initData =
+    GasRefund__factory.createInterface().encodeFunctionData("initialize");
+
+  const gasRefundProxy = await deploy(GAS_REFUND_PROXY, {
+    from: deployer,
+    contract: "InitializableAdminUpgradeabilityProxy",
+    args: [],
+    ...COMMON_DEPLOY_PARAMS,
+  });
+  console.log("gasRefundProxy deployed at:", gasRefundProxy.address);
+
+  const proxyInstance = (await getContract(
+    "InitializableAdminUpgradeabilityProxy",
+    gasRefundProxy.address
+  )) as InitializableAdminUpgradeabilityProxy;
+  await waitForTx(
+    await proxyInstance["initialize(address,address,bytes)"](
+      gasRefund.address,
+      poolConfig.upgradeAdmin!,
+      initData
+    )
+  );
 
   const poolWrapper = (await ethers.getContractAt(
     LeverageDepositor.abi,
     LeverageDepositor.address
   )) as PacPoolWrapper;
 
-  await waitForTx(await poolWrapper.setGasRefund(gasRefund.address));
+  await waitForTx(await poolWrapper.setGasRefund(gasRefundProxy.address));
 };
 
 func.tags = ["periphery-post"];

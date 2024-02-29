@@ -552,6 +552,7 @@ export interface IBaseConfiguration {
     protocol: number;
   };
   RateStrategies: IStrategy;
+  upgradeAdmin?: string;
 }
 
 export interface ICommonConfiguration extends IBaseConfiguration {}
