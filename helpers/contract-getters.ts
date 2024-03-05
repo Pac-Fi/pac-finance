@@ -3,10 +3,13 @@ import {
   GasRefund,
   IBlast,
   ICLSynchronicityPriceAdapter,
+  ICToken,
   IERC20Rebasing,
   IPyth,
   MockAggregator,
   NativeYieldDistribute,
+  Ownable,
+  Ownable__factory,
   PacPoolWrapper,
   StakedTokenTransferStrategy,
 } from "./../typechain";
@@ -195,6 +198,9 @@ export const getOracleAdapter = async (
 export const getRebasingERC20 = async (
   address: tEthereumAddress
 ): Promise<IERC20Rebasing> => getContract("IERC20Rebasing", address);
+
+export const getCToken = async (address: tEthereumAddress): Promise<ICToken> =>
+  getContract("ICToken", address);
 
 export const getPriceOracle = async (
   address?: tEthereumAddress

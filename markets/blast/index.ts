@@ -31,8 +31,6 @@ export const BlastMarket: IAaveConfiguration = {
   ReservesConfig: {
     WETH: strategyWETH,
     USDB: strategyUSDB,
-    WBTC: strategyWBTC,
-    PUMP: strategyPUMP,
     fwWETH: strategyfwWETH,
     fwUSDB: strategyfwUSDB,
     RingLPWETHUSDB: strategyRingLPWETHUSDB,
@@ -41,6 +39,11 @@ export const BlastMarket: IAaveConfiguration = {
     [eBlastNetwork.main]: {
       WETH: "0x4300000000000000000000000000000000000004",
       USDB: "0x4300000000000000000000000000000000000003",
+      fwWETH: "0x66714DB8F3397c767d0A602458B5b4E3C0FE7dd1",
+      fwUSDB: "0x866f2C06B83Df2ed7Ca9C2D044940E7CD55a06d6",
+      RingLPWETHUSDB: "0x9BE8a40C9cf00fe33fd84EAeDaA5C4fe3f04CbC3",
+      oEther: "0xF9B3B455f5d900f62bC1792A6Ca6e1d47B989389",
+      oUSDB: "0x9aECEdCD6A82d26F2f86D331B17a1C1676442A87",
     },
     [eBlastNetwork.testnet]: {
       WETH: "0x4200000000000000000000000000000000000023",
@@ -56,6 +59,9 @@ export const BlastMarket: IAaveConfiguration = {
     [eBlastNetwork.main]: {
       WETH: "0x1a8476F94F5d1351a3BE93b2A2437f750f9343d9",
       USDB: "0xF04383ecA1D1E2eD99f18ef5cFe21d56fe74b036",
+      fwWETH: "0x1a8476F94F5d1351a3BE93b2A2437f750f9343d9",
+      fwUSDB: "0xF04383ecA1D1E2eD99f18ef5cFe21d56fe74b036",
+      RingLPWETHUSDB: "0x741d8B79eeEe07A3452E151341f5458469a95430",
     },
     [eBlastNetwork.testnet]: {
       WETH: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",

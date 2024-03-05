@@ -47,3 +47,4 @@ export const Native_Yield_Distribute_Proxy = "NativeYieldDistributeProxy-";
 export const ERC20_Oracle_Wrapper = "ERC20OracleWrapper";
 export const Fixed_Price_Oracle_Wrapper =
   "CLFixedPriceSynchronicityPriceAdapter";
+export const CToken_Price_Oracle_Wrapper = "ExchangeRateAssetPriceAdapter";

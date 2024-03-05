@@ -79,7 +79,7 @@ export const strategyfwWETH: IReserveParams = {
 
 export const strategyRingLPWETHUSDB: IReserveParams = {
   strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: "5000",
+  baseLTVAsCollateral: "0",
   liquidationThreshold: "6500",
   liquidationBonus: "10500",
   liquidationProtocolFee: "1000",

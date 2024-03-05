@@ -20,6 +20,7 @@ import {IACLManager} from "../../interfaces/IACLManager.sol";
 import {PoolStorage} from "./PoolStorage.sol";
 import {IBlast} from "../../../../interfaces/IBlast.sol";
 import {IGasReceiver} from "../../../../interfaces/IGasReceiver.sol";
+import {IBlastPoints} from "../../../../interfaces/IBlastPoints.sol";
 
 /**
  * @title Pool contract
@@ -41,7 +42,7 @@ import {IGasReceiver} from "../../../../interfaces/IGasReceiver.sol";
 contract Pool is VersionedInitializable, PoolStorage, IPool {
     using ReserveLogic for DataTypes.ReserveData;
 
-    uint256 public constant POOL_REVISION = 0x1;
+    uint256 public constant POOL_REVISION = 0x2;
     address public immutable BLAST;
     IPoolAddressesProvider public immutable ADDRESSES_PROVIDER;
 
@@ -863,5 +864,12 @@ contract Pool is VersionedInitializable, PoolStorage, IPool {
                 recipient
             );
         }
+    }
+
+    function configurePointOperator(
+        address blastPoints,
+        address pointsOperator
+    ) external onlyPoolAdmin {
+        IBlastPoints(blastPoints).configurePointsOperator(pointsOperator);
     }
 }
