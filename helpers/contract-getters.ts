@@ -83,6 +83,9 @@ import { EmissionManager } from "../typechain";
 // Prevent error HH9 when importing this file inside tasks or helpers at Hardhat config load
 declare var hre: HardhatRuntimeEnvironment;
 
+export const getTreasury = async (address: tEthereumAddress): Promise<AToken> =>
+    getContract("AToken", address);
+
 export const getAToken = async (address: tEthereumAddress): Promise<AToken> =>
   getContract("AToken", address);
 

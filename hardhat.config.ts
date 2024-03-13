@@ -222,8 +222,8 @@ export default {
     : undefined,
   etherscan: {
     apiKey: {
-      [eBlastNetwork.testnet]: "blast_sepolia", // apiKey is not required, just set a placeholder
-      [eBlastNetwork.main]: "blast", // apiKey is not required, just set a placeholder
+      [eBlastNetwork.testnet]: "A95CR6XKY1YCB6PCDJ5WXW9FQ99FB5WYR1",
+      [eBlastNetwork.main]: "A95CR6XKY1YCB6PCDJ5WXW9FQ99FB5WYR1",
     },
     customChains: [
       {
@@ -239,9 +239,9 @@ export default {
         network: "blast",
         chainId: 81457,
         urls: {
-          apiURL:
-            "https://api.routescan.io/v2/network/mainnet/evm/81457/etherscan",
-          browserURL: "https://blastexplorer.io",
+          //https://docs.blastscan.io/api-endpoints/contracts#verify-source-code
+          apiURL: "https://api.blastscan.io/api",
+          browserURL: "https://blastscan.io",
         },
       },
     ],
