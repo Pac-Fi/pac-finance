@@ -17,6 +17,7 @@ import {EIP712Base} from "./base/EIP712Base.sol";
 import {IBlast} from "../../../../interfaces/IBlast.sol";
 import {IERC20Rebasing} from "../../../../interfaces/IERC20Rebasing.sol";
 import {INativeYieldDistribute} from "../../../../interfaces/INativeYieldDistribute.sol";
+import {IBlastPoints} from "../../../../interfaces/IBlastPoints.sol";
 
 /**
  * @title Aave ERC20 AToken
@@ -349,6 +350,18 @@ contract AToken is
     ) external override onlyPoolAdmin {
         require(token != _underlyingAsset, Errors.UNDERLYING_CANNOT_BE_RESCUED);
         IERC20(token).safeTransfer(to, amount);
+    }
+
+    function configureClaimableYield() external onlyPoolAdmin {
+        IERC20Rebasing rebase = IERC20Rebasing(_underlyingAsset);
+        rebase.configure(IERC20Rebasing.YieldMode.CLAIMABLE);
+    }
+
+    function configurePointOperator(
+        address blastPoints,
+        address pointsOperator
+    ) external onlyPoolAdmin {
+        IBlastPoints(blastPoints).configurePointsOperator(pointsOperator);
     }
 
     function claimRefundedGas(address recipient) external onlyPool {

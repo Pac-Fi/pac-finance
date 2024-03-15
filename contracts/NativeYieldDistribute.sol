@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.10;
 
+import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import {PausableUpgradeable} from "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {Pausable} from "@openzeppelin/contracts/security/Pausable.sol";
-import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {IScaledBalanceToken} from "./core-v3/contracts/interfaces/IScaledBalanceToken.sol";
+import {IBlast} from "./interfaces/IBlast.sol";
 
-contract NativeYieldDistribute is Ownable, Pausable, ReentrancyGuard {
+contract NativeYieldDistribute is Initializable, OwnableUpgradeable, PausableUpgradeable, ReentrancyGuardUpgradeable {
     using SafeERC20 for IERC20;
 
     event YieldDistributed(uint256 amount, uint256 timestamp);
@@ -29,9 +31,10 @@ contract NativeYieldDistribute is Ownable, Pausable, ReentrancyGuard {
         mapping(uint256 => uint256) roundPoint;
     }
     uint256 internal constant RAY = 1e27;
+    address public immutable BLAST;
 
-    address public immutable yieldToken;
-    address public immutable aToken;
+    address public yieldToken;
+    address public aToken;
 
     // pool info
     //roundId => yield per point
@@ -47,10 +50,21 @@ contract NativeYieldDistribute is Ownable, Pausable, ReentrancyGuard {
     // user info
     mapping(address => UserInfo) public userInfo;
 
-    constructor(address _aToken, address _yieldToken) {
+    constructor(address _blast) {
+        BLAST = _blast;
+    }
+
+    function initialize(address _aToken, address _yieldToken) public initializer {
+        __Ownable_init();
+        __Pausable_init();
+        __ReentrancyGuard_init();
+
         currentRound = 1;
         aToken = _aToken;
         yieldToken = _yieldToken;
+        if (BLAST != address(0)) {
+            IBlast(BLAST).configureClaimableGas();
+        }
     }
 
     function aTokenBalanceChange(address user) external {
@@ -211,5 +225,9 @@ contract NativeYieldDistribute is Ownable, Pausable, ReentrancyGuard {
             IERC20(token).safeTransfer(to, amount);
         }
         emit RescueToken(token, to, amount);
+    }
+
+    function claimRefundedGas(address recipient) external onlyOwner {
+        IBlast(BLAST).claimMaxGas(address(this), recipient);
     }
 }

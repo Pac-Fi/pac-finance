@@ -9,6 +9,7 @@ import {Errors} from "../libraries/helpers/Errors.sol";
 import {IDefaultInterestRateStrategy} from "../../interfaces/IDefaultInterestRateStrategy.sol";
 import {IReserveInterestRateStrategy} from "../../interfaces/IReserveInterestRateStrategy.sol";
 import {IPoolAddressesProvider} from "../../interfaces/IPoolAddressesProvider.sol";
+import {MathUtils} from "../libraries/math/MathUtils.sol";
 
 /**
  * @title DefaultReserveInterestRateStrategy contract
@@ -139,7 +140,7 @@ contract DefaultReserveInterestRateStrategy is IDefaultInterestRateStrategy {
 
     /// @inheritdoc IDefaultInterestRateStrategy
     function getBaseVariableBorrowRate()
-        external
+        public
         view
         override
         returns (uint256)
@@ -149,7 +150,7 @@ contract DefaultReserveInterestRateStrategy is IDefaultInterestRateStrategy {
 
     /// @inheritdoc IDefaultInterestRateStrategy
     function getMaxVariableBorrowRate()
-        external
+        public
         view
         override
         returns (uint256)
@@ -280,5 +281,15 @@ contract DefaultReserveInterestRateStrategy is IDefaultInterestRateStrategy {
             .rayDiv(totalDebt.wadToRay());
 
         return overallBorrowRate;
+    }
+
+    function calculateBaseYearAPY() external view returns (uint256) {
+        uint256 baseRate = getBaseVariableBorrowRate();
+        return MathUtils.calculateCompoundedInterest(baseRate, 0, 31536000);
+    }
+
+    function calculateMaxYearAPY() external view returns (uint256) {
+        uint256 maxRate = getMaxVariableBorrowRate();
+        return MathUtils.calculateCompoundedInterest(maxRate, 0, 31536000);
     }
 }

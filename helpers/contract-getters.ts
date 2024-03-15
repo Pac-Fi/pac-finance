@@ -1,7 +1,15 @@
 import { getFirstSigner } from "./utilities/signer";
 import {
+  GasRefund,
   IBlast,
+  ICLSynchronicityPriceAdapter,
+  ICToken,
+  IERC20Rebasing,
+  IPyth,
   MockAggregator,
+  NativeYieldDistribute,
+  Ownable,
+  Ownable__factory,
   PacPoolWrapper,
   StakedTokenTransferStrategy,
 } from "./../typechain";
@@ -61,6 +69,8 @@ import {
   L2_ENCODER,
   FAUCET_OWNABLE_ID,
   PAC_POOL_WRAPPER,
+  GAS_REFUND_PROXY,
+  Native_Yield_Distribute_Proxy,
 } from "./deploy-ids";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { RewardsController } from "../typechain";
@@ -72,6 +82,9 @@ import { EmissionManager } from "../typechain";
 
 // Prevent error HH9 when importing this file inside tasks or helpers at Hardhat config load
 declare var hre: HardhatRuntimeEnvironment;
+
+export const getTreasury = async (address: tEthereumAddress): Promise<AToken> =>
+    getContract("AToken", address);
 
 export const getAToken = async (address: tEthereumAddress): Promise<AToken> =>
   getContract("AToken", address);
@@ -149,6 +162,23 @@ export const getPool = async (address?: tEthereumAddress): Promise<Pool> =>
     address || (await hre.deployments.get(POOL_PROXY_ID)).address
   );
 
+export const getGasRefund = async (
+  address?: tEthereumAddress
+): Promise<GasRefund> =>
+  getContract(
+    "GasRefund",
+    address || (await hre.deployments.get(GAS_REFUND_PROXY)).address
+  );
+
+export const getNativeYieldDistribute = async (
+  address?: tEthereumAddress
+): Promise<NativeYieldDistribute> =>
+  getContract(
+    "NativeYieldDistribute",
+    address ||
+      (await hre.deployments.get(Native_Yield_Distribute_Proxy)).address
+  );
+
 export const getPacPoolWrapper = async (
   address?: tEthereumAddress
 ): Promise<PacPoolWrapper> =>
@@ -159,6 +189,21 @@ export const getPacPoolWrapper = async (
 
 export const getBlast = async (address: tEthereumAddress): Promise<IBlast> =>
   getContract("IBlast", address);
+
+export const getPYTH = async (address: tEthereumAddress): Promise<IPyth> =>
+  getContract("IPyth", address);
+
+export const getOracleAdapter = async (
+  address: tEthereumAddress
+): Promise<ICLSynchronicityPriceAdapter> =>
+  getContract("ICLSynchronicityPriceAdapter", address);
+
+export const getRebasingERC20 = async (
+  address: tEthereumAddress
+): Promise<IERC20Rebasing> => getContract("IERC20Rebasing", address);
+
+export const getCToken = async (address: tEthereumAddress): Promise<ICToken> =>
+  getContract("ICToken", address);
 
 export const getPriceOracle = async (
   address?: tEthereumAddress

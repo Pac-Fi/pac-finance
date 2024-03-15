@@ -32,8 +32,9 @@ import {
   POOL_CONFIGURATOR_PROXY_ID,
   POOL_DATA_PROVIDER,
   POOL_PROXY_ID,
-  GAS_REFUND,
-  Native_Yield_Distribute,
+  GAS_REFUND_PROXY,
+  GAS_REFUND_IMPL,
+  Native_Yield_Distribute_IMPL,
   UniswapV2_Factory,
   UniswapV2_Router02,
 } from "../../helpers/deploy-ids";
@@ -214,13 +215,14 @@ export async function initializeMakeSuite() {
     poolWrapper.address
   )) as PacPoolWrapper;
 
-  const gasRefund = await deployments.get(GAS_REFUND);
+  const gasRefundProxy = await deployments.get(GAS_REFUND_PROXY);
+  const gasRefund = await deployments.get(GAS_REFUND_IMPL);
   testEnv.gasRefund = (await ethers.getContractAt(
     gasRefund.abi,
-    gasRefund.address
+    gasRefundProxy.address
   )) as GasRefund;
 
-  const yieldDistribute = await deployments.get(Native_Yield_Distribute);
+  const yieldDistribute = await deployments.get(Native_Yield_Distribute_IMPL);
   const yieldAddress = await testEnv.aWETH.yieldDistributor();
   testEnv.wethYieldDistribute = (await ethers.getContractAt(
     yieldDistribute.abi,

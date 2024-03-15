@@ -101,6 +101,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eMantaNetwork.main]: "https://pacific-rpc.manta.network/http",
   [eMantaNetwork.testnet]: "https://pacific-rpc.testnet.manta.network/http",
   [eBlastNetwork.testnet]: "https://sepolia.blast.io",
+  [eBlastNetwork.main]: "https://rpc.ankr.com/blast",
 };
 
 export const LIVE_NETWORKS: iParamsPerNetwork<boolean> = {

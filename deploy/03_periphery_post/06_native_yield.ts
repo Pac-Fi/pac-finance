@@ -11,7 +11,11 @@ import {
   IReserveParams,
   getReserveAddresses,
   getAToken,
-  Native_Yield_Distribute,
+  Native_Yield_Distribute_IMPL,
+  Native_Yield_Distribute_Proxy,
+  getContract,
+  InitializableAdminUpgradeabilityProxy,
+  NativeYieldDistribute__factory, getBlastContractAddress,
 } from "../../helpers";
 
 const func: DeployFunction = async function ({
@@ -31,6 +35,18 @@ const func: DeployFunction = async function ({
   const { ReservesConfig } = poolConfig;
   const reservesAddresses = await getReserveAddresses(poolConfig, network);
 
+  const blastAddress = getBlastContractAddress(hre.network.name);
+  const distributeContract = await deploy(Native_Yield_Distribute_IMPL, {
+    from: deployer,
+    contract: "NativeYieldDistribute",
+    args: [blastAddress],
+    ...COMMON_DEPLOY_PARAMS,
+  });
+  console.log(
+    "NativeYieldDistribute impl deployed at:",
+    distributeContract.address
+  );
+
   for (const [assetSymbol, { nativeYield }] of Object.entries(
     ReservesConfig
   ) as [string, IReserveParams][]) {
@@ -41,22 +57,44 @@ const func: DeployFunction = async function ({
       reservesAddresses[assetSymbol]
     );
 
-    console.log("- Deployment of NativeYieldDistribute for", assetSymbol);
-    const distributeContract = await deploy(Native_Yield_Distribute, {
-      from: deployer,
-      contract: "NativeYieldDistribute",
-      args: [aTokenAddress, reservesAddresses[assetSymbol]],
-      ...COMMON_DEPLOY_PARAMS,
-    });
+    console.log("- Deployment of NativeYieldDistribute proxy for", assetSymbol);
+    const initData =
+      NativeYieldDistribute__factory.createInterface().encodeFunctionData(
+        "initialize",
+        [aTokenAddress, reservesAddresses[assetSymbol]]
+      );
+
+    const distributeContractProxy = await deploy(
+      Native_Yield_Distribute_Proxy + assetSymbol,
+      {
+        from: deployer,
+        contract: "InitializableAdminUpgradeabilityProxy",
+        args: [],
+        ...COMMON_DEPLOY_PARAMS,
+      }
+    );
 
     console.log(
-      "NativeYieldDistribute deployed at:",
-      distributeContract.address
+      "NativeYieldDistribute proxy deployed at:",
+      distributeContractProxy.address
+    );
+
+    const proxyInstance = (await getContract(
+      "InitializableAdminUpgradeabilityProxy",
+      distributeContractProxy.address
+    )) as InitializableAdminUpgradeabilityProxy;
+
+    await waitForTx(
+      await proxyInstance["initialize(address,address,bytes)"](
+        distributeContract.address,
+        poolConfig.upgradeAdmin!,
+        initData
+      )
     );
 
     const aTokenInstance = await getAToken(aTokenAddress);
     await waitForTx(
-      await aTokenInstance.setYieldDistributor(distributeContract.address)
+      await aTokenInstance.setYieldDistributor(distributeContractProxy.address)
     );
   }
 };

@@ -1,0 +1,94 @@
+{
+  "address": "0xF04383ecA1D1E2eD99f18ef5cFe21d56fe74b036",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "fixedPrice",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "DecimalsAboveLimit",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "DecimalsNotEqual",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "FIXED_PRICE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "latestAnswer",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x6366f82c09e3a26805bc8a25bb913c454b45e2ec9d28936595772991db0a599c",
+  "receipt": {
+    "to": null,
+    "from": "0x185782Ee7Cf9A91cc2dFb6F5cc695dD02284b899",
+    "contractAddress": "0xF04383ecA1D1E2eD99f18ef5cFe21d56fe74b036",
+    "transactionIndex": 1,
+    "gasUsed": "97224",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x841d4dc1ced8ddfcf2f834ab48457a015ce71f4f477f21f68adf3a5ed5528570",
+    "transactionHash": "0x6366f82c09e3a26805bc8a25bb913c454b45e2ec9d28936595772991db0a599c",
+    "logs": [],
+    "blockNumber": 189546,
+    "cumulativeGasUsed": "147769",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "100000000"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "8b4a7c02608e279188f9689e803ab5af",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"fixedPrice\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"DecimalsAboveLimit\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"DecimalsNotEqual\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"FIXED_PRICE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestAnswer\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"latestAnswer()\":{\"notice\":\"Calculates the current answer based on the aggregators.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/CLFixedPriceSynchronicityPriceAdapter.sol\":\"CLFixedPriceSynchronicityPriceAdapter\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":100000},\"remappings\":[]},\"sources\":{\"contracts/CLFixedPriceSynchronicityPriceAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\npragma solidity ^0.8.0;\\n\\nimport {ICLSynchronicityPriceAdapter} from \\\"./interfaces/ICLSynchronicityPriceAdapter.sol\\\";\\n\\ncontract CLFixedPriceSynchronicityPriceAdapter is ICLSynchronicityPriceAdapter {\\n    uint256 public immutable FIXED_PRICE;\\n\\n    constructor(uint256 fixedPrice) {\\n        FIXED_PRICE = fixedPrice;\\n    }\\n\\n    function latestAnswer() external view override returns (int256) {\\n        return int256(FIXED_PRICE);\\n    }\\n}\\n\",\"keccak256\":\"0x10b920792401600393725f16ef1e85fd75f70f114c5d148f4f58e5396679429e\",\"license\":\"BUSL-1.1\"},\"contracts/interfaces/ICLSynchronicityPriceAdapter.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ninterface ICLSynchronicityPriceAdapter {\\n    /**\\n     * @notice Calculates the current answer based on the aggregators.\\n     */\\n    function latestAnswer() external view returns (int256);\\n\\n    error DecimalsAboveLimit();\\n    error DecimalsNotEqual();\\n}\\n\",\"keccak256\":\"0x87a1d48750e707ff0956ddfd5ab87494eadea3085b8f2df175478b8735cb302b\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60a060405234801561001057600080fd5b5060405161013538038061013583398101604081905261002f91610037565b608052610050565b60006020828403121561004957600080fd5b5051919050565b60805160c761006e6000396000818160390152606f015260c76000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c806350d25bcd146037578063869cdfc314606b575b600080fd5b7f00000000000000000000000000000000000000000000000000000000000000005b60405190815260200160405180910390f35b60597f00000000000000000000000000000000000000000000000000000000000000008156fea26469706673582212203cfd629f369de7b1466a22ad8c59563dcfae04dcaa8a45fe462197bf6820361664736f6c634300080a0033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060325760003560e01c806350d25bcd146037578063869cdfc314606b575b600080fd5b7f00000000000000000000000000000000000000000000000000000000000000005b60405190815260200160405180910390f35b60597f00000000000000000000000000000000000000000000000000000000000000008156fea26469706673582212203cfd629f369de7b1466a22ad8c59563dcfae04dcaa8a45fe462197bf6820361664736f6c634300080a0033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "latestAnswer()": {
+        "notice": "Calculates the current answer based on the aggregators."
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

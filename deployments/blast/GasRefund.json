@@ -1,0 +1,313 @@
+{
+  "address": "0x90Db38717ea743fA577722931748F1Ad6150b4b4",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_poolWrapper",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "AddressZero",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "GasClaimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "GasRefunded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "POOL_WRAPPER",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum IGasRefund.RefundType",
+          "name": "refundType",
+          "type": "uint8"
+        }
+      ],
+      "name": "addGasRefund",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "claimGas",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "gasBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "enum IGasRefund.RefundType",
+          "name": "refundType",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256",
+          "name": "ratio",
+          "type": "uint256"
+        }
+      ],
+      "name": "setRefundRatio",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0x9b057bcfc28a5b72e113b7481772576b729140bc39f5a371b0d12790f093e3d6",
+  "receipt": {
+    "to": null,
+    "from": "0x185782Ee7Cf9A91cc2dFb6F5cc695dD02284b899",
+    "contractAddress": "0x90Db38717ea743fA577722931748F1Ad6150b4b4",
+    "transactionIndex": 1,
+    "gasUsed": "669369",
+    "logsBloom": "0x00000000000000000000000000000000010000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001002000000000000000000000000000000000020000000000000000100800000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000400000000000000000000000000000000000020000000000000000000000000000002000000000000000000000000000000000000",
+    "blockHash": "0x7ac590b09c2b34eaafd2548996a64521189aa453c029e01c1cbf0dbba8e4db9d",
+    "transactionHash": "0x9b057bcfc28a5b72e113b7481772576b729140bc39f5a371b0d12790f093e3d6",
+    "logs": [
+      {
+        "transactionIndex": 1,
+        "blockNumber": 190542,
+        "transactionHash": "0x9b057bcfc28a5b72e113b7481772576b729140bc39f5a371b0d12790f093e3d6",
+        "address": "0x90Db38717ea743fA577722931748F1Ad6150b4b4",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x000000000000000000000000185782ee7cf9a91cc2dfb6f5cc695dd02284b899"
+        ],
+        "data": "0x",
+        "logIndex": 0,
+        "blockHash": "0x7ac590b09c2b34eaafd2548996a64521189aa453c029e01c1cbf0dbba8e4db9d"
+      }
+    ],
+    "blockNumber": 190542,
+    "cumulativeGasUsed": "719914",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0x0Ea92DEAF7141f405f00BFAad76A8aC74E155C00"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "fbe6c68c848874f366e7f1132f9d14cc",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_poolWrapper\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"AddressZero\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"GasClaimed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"GasRefunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"POOL_WRAPPER\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"enum IGasRefund.RefundType\",\"name\":\"refundType\",\"type\":\"uint8\"}],\"name\":\"addGasRefund\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"claimGas\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"gasBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"enum IGasRefund.RefundType\",\"name\":\"refundType\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"ratio\",\"type\":\"uint256\"}],\"name\":\"setRefundRatio\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/GasRefund.sol\":\"GasRefund\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":100000},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.9.0) (access/Ownable.sol)\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * By default, the owner account will be the one that deploys the contract. This\\n * can later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the deployer as the initial owner.\\n     */\\n    constructor() {\\n        _transferOwnership(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        require(owner() == _msgSender(), \\\"Ownable: caller is not the owner\\\");\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby disabling any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        require(newOwner != address(0), \\\"Ownable: new owner is the zero address\\\");\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0xba43b97fba0d32eb4254f6a5a297b39a19a247082a02d6e69349e071e2946218\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.9.4) (utils/Context.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n\\n    function _contextSuffixLength() internal view virtual returns (uint256) {\\n        return 0;\\n    }\\n}\\n\",\"keccak256\":\"0xa92e4fa126feb6907daa0513ddd816b2eb91f30a808de54f63c17d0e162c3439\",\"license\":\"MIT\"},\"contracts/GasRefund.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity 0.8.10;\\n\\nimport {Ownable} from \\\"@openzeppelin/contracts/access/Ownable.sol\\\";\\nimport {IGasRefund} from \\\"./interfaces/IGasRefund.sol\\\";\\nimport {PercentageMath} from \\\"./core-v3/contracts/protocol/libraries/math/PercentageMath.sol\\\";\\n\\ncontract GasRefund is Ownable {\\n    using PercentageMath for uint256;\\n\\n    address public immutable POOL_WRAPPER;\\n\\n    mapping(address => uint256) private _balances;\\n    mapping(IGasRefund.RefundType => uint256) private _refundRatio;\\n\\n    error AddressZero();\\n\\n    event GasRefunded(address user, uint256 amount);\\n\\n    event GasClaimed(address user, uint256 amount);\\n\\n    modifier onlyPoolWrapper() {\\n        require(msg.sender == POOL_WRAPPER, \\\"only pool wrapper\\\");\\n        _;\\n    }\\n\\n    constructor(address _poolWrapper) {\\n        if (address(_poolWrapper) == address(0)) revert AddressZero();\\n\\n        POOL_WRAPPER = _poolWrapper;\\n        _refundRatio[IGasRefund.RefundType.SUPPLY] = 7000;\\n        _refundRatio[IGasRefund.RefundType.WITHDRAW] = 8000;\\n        _refundRatio[IGasRefund.RefundType.BORROW] = 8000;\\n        _refundRatio[IGasRefund.RefundType.REPAY] = 7000;\\n        _refundRatio[IGasRefund.RefundType.LEVERAGEDEPOSIT] = 6000;\\n    }\\n\\n    function gasBalance(address user) external view returns (uint256) {\\n        return _balances[user];\\n    }\\n\\n    function addGasRefund(\\n        address user,\\n        uint256 amount,\\n        IGasRefund.RefundType refundType\\n    ) external onlyPoolWrapper {\\n        uint256 ratio = _refundRatio[refundType];\\n        uint256 actualAmount = amount.percentMul(ratio);\\n        _balances[user] += actualAmount;\\n        emit GasRefunded(user, actualAmount);\\n    }\\n\\n    function claimGas() external {\\n        uint256 balance = _balances[msg.sender];\\n        _balances[msg.sender] = 0;\\n        _safeTransferETH(msg.sender, balance);\\n        emit GasClaimed(msg.sender, balance);\\n    }\\n\\n    function setRefundRatio(\\n        IGasRefund.RefundType refundType,\\n        uint256 ratio\\n    ) external onlyOwner {\\n        _refundRatio[refundType] = ratio;\\n    }\\n\\n    receive() external payable {}\\n\\n    function _safeTransferETH(address to, uint256 value) internal {\\n        (bool success, ) = to.call{value: value}(new bytes(0));\\n        require(success, \\\"ETH_TRANSFER_FAILED\\\");\\n    }\\n}\\n\",\"keccak256\":\"0xc2d44ff376696f3388d848db52ff00d3e49b8192fb50712621b869eef6685b57\",\"license\":\"MIT\"},\"contracts/core-v3/contracts/protocol/libraries/math/PercentageMath.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title PercentageMath library\\n * @author Aave\\n * @notice Provides functions to perform percentage calculations\\n * @dev Percentages are defined by default with 2 decimals of precision (100.00). The precision is indicated by PERCENTAGE_FACTOR\\n * @dev Operations are rounded. If a value is >=.5, will be rounded up, otherwise rounded down.\\n */\\nlibrary PercentageMath {\\n    // Maximum percentage factor (100.00%)\\n    uint256 internal constant PERCENTAGE_FACTOR = 1e4;\\n\\n    // Half percentage factor (50.00%)\\n    uint256 internal constant HALF_PERCENTAGE_FACTOR = 0.5e4;\\n\\n    /**\\n     * @notice Executes a percentage multiplication\\n     * @dev assembly optimized for improved gas savings, see https://twitter.com/transmissions11/status/1451131036377571328\\n     * @param value The value of which the percentage needs to be calculated\\n     * @param percentage The percentage of the value to be calculated\\n     * @return result value percentmul percentage\\n     */\\n    function percentMul(\\n        uint256 value,\\n        uint256 percentage\\n    ) internal pure returns (uint256 result) {\\n        // to avoid overflow, value <= (type(uint256).max - HALF_PERCENTAGE_FACTOR) / percentage\\n        assembly {\\n            if iszero(\\n                or(\\n                    iszero(percentage),\\n                    iszero(\\n                        gt(\\n                            value,\\n                            div(sub(not(0), HALF_PERCENTAGE_FACTOR), percentage)\\n                        )\\n                    )\\n                )\\n            ) {\\n                revert(0, 0)\\n            }\\n\\n            result := div(\\n                add(mul(value, percentage), HALF_PERCENTAGE_FACTOR),\\n                PERCENTAGE_FACTOR\\n            )\\n        }\\n    }\\n\\n    /**\\n     * @notice Executes a percentage division\\n     * @dev assembly optimized for improved gas savings, see https://twitter.com/transmissions11/status/1451131036377571328\\n     * @param value The value of which the percentage needs to be calculated\\n     * @param percentage The percentage of the value to be calculated\\n     * @return result value percentdiv percentage\\n     */\\n    function percentDiv(\\n        uint256 value,\\n        uint256 percentage\\n    ) internal pure returns (uint256 result) {\\n        // to avoid overflow, value <= (type(uint256).max - halfPercentage) / PERCENTAGE_FACTOR\\n        assembly {\\n            if or(\\n                iszero(percentage),\\n                iszero(\\n                    iszero(\\n                        gt(\\n                            value,\\n                            div(\\n                                sub(not(0), div(percentage, 2)),\\n                                PERCENTAGE_FACTOR\\n                            )\\n                        )\\n                    )\\n                )\\n            ) {\\n                revert(0, 0)\\n            }\\n\\n            result := div(\\n                add(mul(value, PERCENTAGE_FACTOR), div(percentage, 2)),\\n                percentage\\n            )\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xca74deb7d5b6cb30610f2c476c122c03b259a22e6a88ee30ed40bfd241d83d7a\",\"license\":\"BUSL-1.1\"},\"contracts/interfaces/IGasRefund.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity 0.8.10;\\n\\ninterface IGasRefund {\\n    enum RefundType {\\n        SUPPLY,\\n        WITHDRAW,\\n        BORROW,\\n        REPAY,\\n        LEVERAGEDEPOSIT\\n    }\\n\\n    function addGasRefund(\\n        address user,\\n        uint256 amount,\\n        RefundType refundType\\n    ) external;\\n}\\n\",\"keccak256\":\"0xa9f3efc8d28964bed70a9bb58dcb2584e8a2944721eeef8883325431e5f4af99\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60a060405234801561001057600080fd5b50604051610a77380380610a7783398101604081905261002f91610181565b61003833610131565b6001600160a01b03811661005f57604051639fabe1c160e01b815260040160405180910390fd5b6001600160a01b03166080526002602052611b587fac33ff75c19e70fe83507db0d683fd3465c996598dc972688b7ace676c89077b819055611f407fe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e08190557f679795a0195a1b76cdebb7c51d74e058aee92919b8c3389af86ef24535e8a28c557f88601476d11616a71c5be67555bd1dff4b1cbf21533d2669b768b61518cfe1c35560046000526117707fee60d0579bcffd98e668647d59fec1ff86a7fb340ce572e844f234ae73a6918f556101b1565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b60006020828403121561019357600080fd5b81516001600160a01b03811681146101aa57600080fd5b9392505050565b6080516108a56101d260003960008181609d01526102bd01526108a56000f3fe60806040526004361061007f5760003560e01c80639dafaf6d1161004e5780639dafaf6d1461014b578063a95d6b1c1461019c578063cff29e67146101b1578063f2fde38b146101d157600080fd5b806359bbc0431461008b578063715018a6146100e95780638da5cb5b14610100578063957d31301461012b57600080fd5b3661008657005b600080fd5b34801561009757600080fd5b506100bf7f000000000000000000000000000000000000000000000000000000000000000081565b60405173ffffffffffffffffffffffffffffffffffffffff90911681526020015b60405180910390f35b3480156100f557600080fd5b506100fe6101f1565b005b34801561010c57600080fd5b5060005473ffffffffffffffffffffffffffffffffffffffff166100bf565b34801561013757600080fd5b506100fe61014636600461071a565b610205565b34801561015757600080fd5b5061018e610166366004610768565b73ffffffffffffffffffffffffffffffffffffffff1660009081526001602052604090205490565b6040519081526020016100e0565b3480156101a857600080fd5b506100fe61024a565b3480156101bd57600080fd5b506100fe6101cc36600461078a565b6102a5565b3480156101dd57600080fd5b506100fe6101ec366004610768565b61042d565b6101f96104e4565b6102036000610565565b565b61020d6104e4565b8060026000846004811115610224576102246107c6565b6004811115610235576102356107c6565b81526020810191909152604001600020555050565b33600081815260016020526040812080549190559061026990826105da565b60408051338152602081018390527f712fd84fea7ca9889804a2092168c215381d1b1af5f71843eeb455309930d72f910160405180910390a150565b3373ffffffffffffffffffffffffffffffffffffffff7f00000000000000000000000000000000000000000000000000000000000000001614610349576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601160248201527f6f6e6c7920706f6f6c207772617070657200000000000000000000000000000060448201526064015b60405180910390fd5b600060026000836004811115610361576103616107c6565b6004811115610372576103726107c6565b8152602001908152602001600020549050600061039882856106c390919063ffffffff16565b73ffffffffffffffffffffffffffffffffffffffff86166000908152600160205260408120805492935083929091906103d29084906107f5565b90915550506040805173ffffffffffffffffffffffffffffffffffffffff87168152602081018390527f667ad9c7167aea9bfcff8b321015abb0d8b77cf151a377e09e12b9017f9889fd910160405180910390a15050505050565b6104356104e4565b73ffffffffffffffffffffffffffffffffffffffff81166104d8576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201527f64647265737300000000000000000000000000000000000000000000000000006064820152608401610340565b6104e181610565565b50565b60005473ffffffffffffffffffffffffffffffffffffffff163314610203576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152606401610340565b6000805473ffffffffffffffffffffffffffffffffffffffff8381167fffffffffffffffffffffffff0000000000000000000000000000000000000000831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6040805160008082526020820190925273ffffffffffffffffffffffffffffffffffffffff84169083906040516106119190610834565b60006040518083038185875af1925050503d806000811461064e576040519150601f19603f3d011682016040523d82523d6000602084013e610653565b606091505b50509050806106be576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601360248201527f4554485f5452414e534645525f4641494c4544000000000000000000000000006044820152606401610340565b505050565b600081157fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffec77839004841115176106f857600080fd5b506127109102611388010490565b80356005811061071557600080fd5b919050565b6000806040838503121561072d57600080fd5b61073683610706565b946020939093013593505050565b803573ffffffffffffffffffffffffffffffffffffffff8116811461071557600080fd5b60006020828403121561077a57600080fd5b61078382610744565b9392505050565b60008060006060848603121561079f57600080fd5b6107a884610744565b9250602084013591506107bd60408501610706565b90509250925092565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602160045260246000fd5b6000821982111561082f577f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b500190565b6000825160005b81811015610855576020818601810151858301520161083b565b81811115610864576000828501525b50919091019291505056fea2646970667358221220be8236983fb3b7f266538bf84ec9d9603bb3c3958bfd0cd19823c514015bea7364736f6c634300080a0033",
+  "deployedBytecode": "0x60806040526004361061007f5760003560e01c80639dafaf6d1161004e5780639dafaf6d1461014b578063a95d6b1c1461019c578063cff29e67146101b1578063f2fde38b146101d157600080fd5b806359bbc0431461008b578063715018a6146100e95780638da5cb5b14610100578063957d31301461012b57600080fd5b3661008657005b600080fd5b34801561009757600080fd5b506100bf7f000000000000000000000000000000000000000000000000000000000000000081565b60405173ffffffffffffffffffffffffffffffffffffffff90911681526020015b60405180910390f35b3480156100f557600080fd5b506100fe6101f1565b005b34801561010c57600080fd5b5060005473ffffffffffffffffffffffffffffffffffffffff166100bf565b34801561013757600080fd5b506100fe61014636600461071a565b610205565b34801561015757600080fd5b5061018e610166366004610768565b73ffffffffffffffffffffffffffffffffffffffff1660009081526001602052604090205490565b6040519081526020016100e0565b3480156101a857600080fd5b506100fe61024a565b3480156101bd57600080fd5b506100fe6101cc36600461078a565b6102a5565b3480156101dd57600080fd5b506100fe6101ec366004610768565b61042d565b6101f96104e4565b6102036000610565565b565b61020d6104e4565b8060026000846004811115610224576102246107c6565b6004811115610235576102356107c6565b81526020810191909152604001600020555050565b33600081815260016020526040812080549190559061026990826105da565b60408051338152602081018390527f712fd84fea7ca9889804a2092168c215381d1b1af5f71843eeb455309930d72f910160405180910390a150565b3373ffffffffffffffffffffffffffffffffffffffff7f00000000000000000000000000000000000000000000000000000000000000001614610349576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601160248201527f6f6e6c7920706f6f6c207772617070657200000000000000000000000000000060448201526064015b60405180910390fd5b600060026000836004811115610361576103616107c6565b6004811115610372576103726107c6565b8152602001908152602001600020549050600061039882856106c390919063ffffffff16565b73ffffffffffffffffffffffffffffffffffffffff86166000908152600160205260408120805492935083929091906103d29084906107f5565b90915550506040805173ffffffffffffffffffffffffffffffffffffffff87168152602081018390527f667ad9c7167aea9bfcff8b321015abb0d8b77cf151a377e09e12b9017f9889fd910160405180910390a15050505050565b6104356104e4565b73ffffffffffffffffffffffffffffffffffffffff81166104d8576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201527f64647265737300000000000000000000000000000000000000000000000000006064820152608401610340565b6104e181610565565b50565b60005473ffffffffffffffffffffffffffffffffffffffff163314610203576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152606401610340565b6000805473ffffffffffffffffffffffffffffffffffffffff8381167fffffffffffffffffffffffff0000000000000000000000000000000000000000831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6040805160008082526020820190925273ffffffffffffffffffffffffffffffffffffffff84169083906040516106119190610834565b60006040518083038185875af1925050503d806000811461064e576040519150601f19603f3d011682016040523d82523d6000602084013e610653565b606091505b50509050806106be576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601360248201527f4554485f5452414e534645525f4641494c4544000000000000000000000000006044820152606401610340565b505050565b600081157fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffec77839004841115176106f857600080fd5b506127109102611388010490565b80356005811061071557600080fd5b919050565b6000806040838503121561072d57600080fd5b61073683610706565b946020939093013593505050565b803573ffffffffffffffffffffffffffffffffffffffff8116811461071557600080fd5b60006020828403121561077a57600080fd5b61078382610744565b9392505050565b60008060006060848603121561079f57600080fd5b6107a884610744565b9250602084013591506107bd60408501610706565b90509250925092565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602160045260246000fd5b6000821982111561082f577f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b500190565b6000825160005b81811015610855576020818601810151858301520161083b565b81811115610864576000828501525b50919091019291505056fea2646970667358221220be8236983fb3b7f266538bf84ec9d9603bb3c3958bfd0cd19823c514015bea7364736f6c634300080a0033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 7,
+        "contract": "contracts/GasRefund.sol:GasRefund",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 1071,
+        "contract": "contracts/GasRefund.sol:GasRefund",
+        "label": "_balances",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_address,t_uint256)"
+      },
+      {
+        "astId": 1076,
+        "contract": "contracts/GasRefund.sol:GasRefund",
+        "label": "_refundRatio",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_enum(RefundType)7726,t_uint256)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_enum(RefundType)7726": {
+        "encoding": "inplace",
+        "label": "enum IGasRefund.RefundType",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_mapping(t_enum(RefundType)7726,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_enum(RefundType)7726",
+        "label": "mapping(enum IGasRefund.RefundType => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

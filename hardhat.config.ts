@@ -124,10 +124,6 @@ export default {
       eArbitrumNetwork.goerliNitro,
       421613
     ),
-    // [eParallelNetwork.devL3]: getCommonNetworkConfig(
-    //   eParallelNetwork.devL3,
-    //   31337
-    // ),
     [eParallelNetwork.devL3]: getCommonNetworkConfig(
       eParallelNetwork.devL3,
       3163830386846714
@@ -141,7 +137,7 @@ export default {
       eMantaNetwork.testnet,
       3441005
     ),
-    [eBlastNetwork.main]: getCommonNetworkConfig(eBlastNetwork.main, 0),
+    [eBlastNetwork.main]: getCommonNetworkConfig(eBlastNetwork.main, 81457),
     [eBlastNetwork.testnet]: getCommonNetworkConfig(
       eBlastNetwork.testnet,
       168587773
@@ -226,7 +222,8 @@ export default {
     : undefined,
   etherscan: {
     apiKey: {
-      [eBlastNetwork.testnet]: "blast_sepolia", // apiKey is not required, just set a placeholder
+      [eBlastNetwork.testnet]: "A95CR6XKY1YCB6PCDJ5WXW9FQ99FB5WYR1",
+      [eBlastNetwork.main]: "A95CR6XKY1YCB6PCDJ5WXW9FQ99FB5WYR1",
     },
     customChains: [
       {
@@ -236,6 +233,15 @@ export default {
           apiURL:
             "https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan",
           browserURL: "https://testnet.blastscan.io",
+        },
+      },
+      {
+        network: "blast",
+        chainId: 81457,
+        urls: {
+          //https://docs.blastscan.io/api-endpoints/contracts#verify-source-code
+          apiURL: "https://api.blastscan.io/api",
+          browserURL: "https://blastscan.io",
         },
       },
     ],
