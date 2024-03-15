@@ -42,3 +42,5 @@ export const FAUCET_OWNABLE_ID = `Faucet-${MARKET_NAME}`;
 export const PAC_POOL_WRAPPER = "PacPoolWrapper";
 export const GAS_REFUND = "GasRefund";
 export const Native_Yield_Distribute = "NativeYieldDistribute";
+export const UniswapV2_Factory = "UniswapV2Factory";
+export const UniswapV2_Router02 = "UniswapV2Router02";

@@ -21,6 +21,9 @@ import {
   Faucet,
   GasRefund,
   NativeYieldDistribute,
+  UniswapV2Factory,
+  UniswapV2Router02,
+  MintableERC20,
 } from "../../typechain";
 import {
   PAC_POOL_WRAPPER,
@@ -31,11 +34,14 @@ import {
   POOL_PROXY_ID,
   GAS_REFUND,
   Native_Yield_Distribute,
+  UniswapV2_Factory,
+  UniswapV2_Router02,
 } from "../../helpers/deploy-ids";
 import {
   getAToken,
   getFaucet,
   getVariableDebtToken,
+  getMintableERC20,
   getWETH,
 } from "../../helpers/contract-getters";
 
@@ -60,6 +66,9 @@ export interface TestEnv {
   weth: WETH9;
   aWETH: AToken;
   debtWETH: VariableDebtToken;
+  usdc: MintableERC20;
+  aUsdc: AToken;
+  debtUsdc: VariableDebtToken;
   addressesProvider: PoolAddressesProvider;
   registry: PoolAddressesProviderRegistry;
   wrappedTokenGateway: WrappedTokenGatewayV3;
@@ -67,6 +76,8 @@ export interface TestEnv {
   poolWrapper: PacPoolWrapper;
   gasRefund: GasRefund;
   wethYieldDistribute: NativeYieldDistribute;
+  uniswapFactory: UniswapV2Factory;
+  uniswapRouter: UniswapV2Router02;
 }
 
 let HardhatSnapshotId: string = "0x1";
@@ -87,6 +98,9 @@ const testEnv: TestEnv = {
   weth: {} as WETH9,
   aWETH: {} as AToken,
   debtWETH: {} as VariableDebtToken,
+  usdc: {} as MintableERC20,
+  aUsdc: {} as AToken,
+  debtUsdc: {} as VariableDebtToken,
   addressesProvider: {} as PoolAddressesProvider,
   registry: {} as PoolAddressesProviderRegistry,
   wrappedTokenGateway: {} as WrappedTokenGatewayV3,
@@ -94,6 +108,8 @@ const testEnv: TestEnv = {
   poolWrapper: {} as PacPoolWrapper,
   gasRefund: {} as GasRefund,
   wethYieldDistribute: {} as NativeYieldDistribute,
+  uniswapFactory: {} as UniswapV2Factory,
+  uniswapRouter: {} as UniswapV2Router02,
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -180,6 +196,18 @@ export async function initializeMakeSuite() {
   testEnv.weth = await getWETH(wethAddress!);
   testEnv.debtWETH = await getVariableDebtToken(variableDebtAddress);
 
+  const usdcAddress = reservesTokens.find(
+      (token) => token.symbol === "USDC"
+  )?.tokenAddress;
+  const aUsdcAddress = allTokens.find(
+      (aToken) => aToken.symbol === "aTestUSDC"
+  )?.tokenAddress;
+  const { variableDebtTokenAddress: usdcVariableDebtAddress } =
+      await testEnv.helpersContract.getReserveTokensAddresses(usdcAddress!);
+  testEnv.aUsdc = await getAToken(aUsdcAddress!);
+  testEnv.usdc = await getMintableERC20(usdcAddress!);
+  testEnv.debtUsdc = await getVariableDebtToken(usdcVariableDebtAddress);
+
   const poolWrapper = await deployments.get(PAC_POOL_WRAPPER);
   testEnv.poolWrapper = (await ethers.getContractAt(
     poolWrapper.abi,
@@ -198,6 +226,18 @@ export async function initializeMakeSuite() {
     yieldDistribute.abi,
     yieldAddress
   )) as NativeYieldDistribute;
+
+  const uniswapFactory = await deployments.get(UniswapV2_Factory);
+  testEnv.uniswapFactory = (await ethers.getContractAt(
+    uniswapFactory.abi,
+    uniswapFactory.address
+  )) as UniswapV2Factory;
+
+  const uniswapRouter = await deployments.get(UniswapV2_Router02);
+  testEnv.uniswapRouter = (await ethers.getContractAt(
+    uniswapRouter.abi,
+    uniswapRouter.address
+  )) as UniswapV2Router02;
 
   if (isTestnetMarket(poolConfig)) {
     testEnv.faucetOwnable = await getFaucet();
