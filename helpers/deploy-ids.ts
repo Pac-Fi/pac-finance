@@ -45,6 +45,7 @@ export const GAS_REFUND_PROXY = "GasRefundProxy";
 export const Native_Yield_Distribute_IMPL = "NativeYieldDistributeImpl";
 export const Native_Yield_Distribute_Proxy = "NativeYieldDistributeProxy-";
 export const ERC20_Oracle_Wrapper = "ERC20OracleWrapper";
+export const API3_Oracle_Wrapper = "API3_Oracle_Wrapper";
 export const Fixed_Price_Oracle_Wrapper =
   "CLFixedPriceSynchronicityPriceAdapter";
 export const CToken_Price_Oracle_Wrapper = "ExchangeRateAssetPriceAdapter";
