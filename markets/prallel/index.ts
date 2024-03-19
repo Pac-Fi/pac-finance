@@ -1,4 +1,4 @@
-import { eParallelNetwork, IAaveConfiguration} from "../../helpers/types";
+import { eParallelNetwork, IAaveConfiguration } from "../../helpers/types";
 import { strategyUSDC, strategyWBTC, strategyWETH } from "./reservesConfigs";
 import { CommonsConfig } from "../aave/commons";
 // ----------------
@@ -13,9 +13,9 @@ export const ParallelMarket: IAaveConfiguration = {
   ATokenNamePrefix: "Parallel",
   StableDebtTokenNamePrefix: "Parallel",
   VariableDebtTokenNamePrefix: "Parallel",
-  OracleQuoteCurrency: "ETH",
-  OracleQuoteUnit: "18",
-  SymbolPrefix: "Parallel",
+  OracleQuoteCurrency: "USD",
+  OracleQuoteUnit: "8",
+  SymbolPrefix: "",
   ReservesConfig: {
     USDC: strategyUSDC,
     WBTC: strategyWBTC,
@@ -23,16 +23,16 @@ export const ParallelMarket: IAaveConfiguration = {
   },
   ReserveAssets: {
     [eParallelNetwork.devL2]: {
-      USDC: "0x5EC703Bfaada5EfFB0740d915e7C3348f4Ce558D",
-      WBTC: "0x379F674fF9a97D6500E7f665a68Fa4961ec13575",
-      WETH: "0x8fe830A831423EE60d2dF5D290899bafb5E00FDB",
+      USDC: "0xc3E1C28993B9973995E4a72CbA706321066A7cbF",
+      WBTC: "0x86A291c4CFDF593B3b784347FEeBC2Ffc6F710eF",
+      WETH: "0x1E48dfD798560Ba47cb061fd6531C0bEa97C9459",
     },
   },
   ChainlinkAggregator: {
     [eParallelNetwork.devL2]: {
-      USDC: "0x7c9EA6CAF2C6EEEEA2707f140E2eEa69EBa4353D",
-      WBTC: "0xd04f088E91FAf9358a53d84F27bfC8F6CF8F9bE2",
-      WETH: "0x0000000000000000000000000000000000000000",
+      USDC: "0x9af637009b1E393e862aCC6803f2866441270976",
+      WBTC: "0x755B7cFCf7BD45d845A2d3e43176e9038e6d554E",
+      WETH: "0x1019Be98D5f2A566179d5AF32bcdeE30e11A72C6",
     },
   },
 };

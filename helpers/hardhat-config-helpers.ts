@@ -94,10 +94,9 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     eEthereumNetwork.sepolia
   )}`,
   [eArbitrumNetwork.goerliNitro]: `https://goerli-rollup.arbitrum.io/rpc`,
-  [eParallelNetwork.devL3]:
-    "https://nitrorpc-compact-lime-moose-5r7g6fkl78.t.conduit.xyz",
   [eParallelNetwork.devL2]:
-    "https://rpc-surprised-harlequin-bonobo-fvcy2k9oqh.t.conduit.xyz",
+    "https://rpc-accused-coffee-koala-b9fn1dik76.t.conduit.xyz",
+  [eParallelNetwork.mainnet]: "https://rpc-parallel-mainnet-0.t.conduit.xyz",
   [eMantaNetwork.main]: "https://pacific-rpc.manta.network/http",
   [eMantaNetwork.testnet]: "https://pacific-rpc.testnet.manta.network/http",
   [eBlastNetwork.testnet]: "https://sepolia.blast.io",
@@ -111,8 +110,8 @@ export const LIVE_NETWORKS: iParamsPerNetwork<boolean> = {
   [eHarmonyNetwork.main]: true,
   [eAvalancheNetwork.avalanche]: true,
   [eFantomNetwork.main]: true,
-  [eOptimismNetwork.main]: true, //identify if need to deploy test asset
-  [eParallelNetwork.devL3]: true,
+  [eOptimismNetwork.main]: true,
+  [eParallelNetwork.mainnet]: true,
   [eParallelNetwork.devL2]: true,
   [eMantaNetwork.main]: true,
   [eBlastNetwork.main]: true,

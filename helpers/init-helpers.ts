@@ -371,14 +371,14 @@ export const configureReservesByHelper = async (
   }
   if (tokens.length) {
     // Set aTokenAndRatesDeployer as temporal admin
-    // const aclAdmin = await hre.ethers.getSigner(
-    //   await addressProvider.getACLAdmin()
-    // );
-    // await waitForTx(
-    //   await aclManager
-    //     .connect(aclAdmin)
-    //     .addRiskAdmin(reservesSetupHelper.address)
-    // );
+    const aclAdmin = await hre.ethers.getSigner(
+      await addressProvider.getACLAdmin()
+    );
+    await waitForTx(
+      await aclManager
+        .connect(aclAdmin)
+        .addRiskAdmin(reservesSetupHelper.address)
+    );
 
     // Deploy init per chunks
     const enableChunks = 20;
@@ -404,11 +404,11 @@ export const configureReservesByHelper = async (
       );
     }
     // Remove ReservesSetupHelper from risk admins
-    // await waitForTx(
-    //   await aclManager
-    //     .connect(aclAdmin)
-    //     .removeRiskAdmin(reservesSetupHelper.address)
-    // );
+    await waitForTx(
+      await aclManager
+        .connect(aclAdmin)
+        .removeRiskAdmin(reservesSetupHelper.address)
+    );
   }
 };
 

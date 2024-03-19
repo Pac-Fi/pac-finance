@@ -23,7 +23,7 @@ export const BlastMarket: IAaveConfiguration = {
   ATokenNamePrefix: "Parallel",
   StableDebtTokenNamePrefix: "Parallel",
   VariableDebtTokenNamePrefix: "Parallel",
-  OracleQuoteCurrency: "ETH",
+  OracleQuoteCurrency: "USD",
   OracleQuoteUnit: "8",
   SymbolPrefix: "",
   upgradeAdmin: "0xf2B18c20Ed5E5a6ABB15377D619C1879639339AD",

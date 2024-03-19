@@ -25,8 +25,8 @@ export type eNetwork =
 type eTenderlyNetwork = "tenderly";
 
 export enum eParallelNetwork {
-  devL3 = "devL3",
   devL2 = "devL2",
+  mainnet = "mainnet",
 }
 
 export enum eMantaNetwork {

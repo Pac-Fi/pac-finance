@@ -1,7 +1,6 @@
 import {
   DETERMINISTIC_DEPLOYMENT,
   DETERMINISTIC_FACTORIES,
-  ETHERSCAN_KEY,
   getCommonNetworkConfig,
   hardhatNetworkSettings,
   loadTasks,
@@ -17,7 +16,6 @@ import {
   eMantaNetwork,
   eBlastNetwork,
   ePolygonNetwork,
-  eTenderly,
 } from "./helpers/types";
 import { DEFAULT_NAMED_ACCOUNTS } from "./helpers/constants";
 
@@ -124,13 +122,13 @@ export default {
       eArbitrumNetwork.goerliNitro,
       421613
     ),
-    [eParallelNetwork.devL3]: getCommonNetworkConfig(
-      eParallelNetwork.devL3,
-      3163830386846714
+    [eParallelNetwork.mainnet]: getCommonNetworkConfig(
+      eParallelNetwork.mainnet,
+      1024
     ),
     [eParallelNetwork.devL2]: getCommonNetworkConfig(
       eParallelNetwork.devL2,
-      2982896226593698
+      9659
     ),
     [eMantaNetwork.main]: getCommonNetworkConfig(eMantaNetwork.main, 169),
     [eMantaNetwork.testnet]: getCommonNetworkConfig(
