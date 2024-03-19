@@ -11,7 +11,7 @@ import {
 } from "../../helpers/types";
 
 import { CommonsConfig } from "./commons";
-import { strategyWETH } from "./reservesConfigs";
+import { strategyUSDC, strategyWETH } from "./reservesConfigs";
 
 // ----------------
 // POOL--SPECIFIC PARAMS
@@ -23,6 +23,7 @@ export const AaveMarket: IAaveConfiguration = {
   ProviderId: 8080,
   ReservesConfig: {
     WETH: strategyWETH,
+    USDC: strategyUSDC,
   },
   ReserveAssets: {},
   upgradeAdmin: "0xf2B18c20Ed5E5a6ABB15377D619C1879639339AD",

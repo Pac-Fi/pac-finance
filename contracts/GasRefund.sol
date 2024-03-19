@@ -44,6 +44,7 @@ contract GasRefund is Initializable, OwnableUpgradeable {
         _refundRatio[IGasRefund.RefundType.BORROW] = 8000;
         _refundRatio[IGasRefund.RefundType.REPAY] = 7000;
         _refundRatio[IGasRefund.RefundType.LEVERAGEDEPOSIT] = 6000;
+        _refundRatio[IGasRefund.RefundType.MULTIPLIERDEPOSIT] = 6000;
 
         if (BLAST != address(0)) {
             IBlast(BLAST).configureClaimableGas();

@@ -14,6 +14,7 @@ import {IAToken} from "./core-v3/contracts/interfaces/IAToken.sol";
 import {DataTypesHelper} from "./periphery-v3/contracts/libraries/DataTypesHelper.sol";
 import {IGasRefund} from "./interfaces/IGasRefund.sol";
 import {IBlast} from "./interfaces/IBlast.sol";
+import {IUniswapV2Router02} from "./dependencies/uniswapv2/interfaces/IUniswapV2Router02.sol";
 
 /// @title PAC Pool Wrapper Contract
 /// @author PAC
@@ -26,6 +27,10 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
     /// @notice Wrapped ETH contract address
     IWETH public immutable WETH;
 
+    /// @notice UniswapV2 swap router contract address
+    IUniswapV2Router02 public swapRouter;
+
+    /// @notice Gas refund contract address
     address public gasRefund;
 
     uint16 private constant referralCode = 0;
@@ -40,6 +45,15 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
 
     error InvalidMsgValue();
 
+    error InvalidParam();
+
+    error FeatureNotActive();
+
+    enum OperationType {
+        Leverage,
+        Multiplier
+    }
+
     /**
      * @dev Emitted during leverageDeposit()
      * @param user The address of the user
@@ -52,6 +66,22 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         address asset,
         uint256 cashAmount,
         uint256 borrowAmount
+    );
+
+    /**
+     * @dev Emitted during multiplierDeposit()
+     * @param user The address of the user
+     * @param asset The address of the asset
+     * @param cashAmount The amount of cash for the deposit
+     * @param borrowAmount The amount borrowed from lending pool for the deposit
+     * @param depositAsset The address of the deposit asset
+     **/
+    event MultiplierDeposit(
+        address user,
+        address asset,
+        uint256 cashAmount,
+        uint256 borrowAmount,
+        address depositAsset
     );
 
     /**
@@ -218,7 +248,7 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
             IERC20(asset).safeTransferFrom(msg.sender, address(this), amount);
         }
 
-        _checkApprove(asset);
+        _checkApprove(asset, address(POOL));
 
         uint256 gasBegin = gasleft();
         POOL.supply(asset, amount, onBehalfOf, referralCode);
@@ -332,7 +362,12 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         }
 
         uint256 gasBegin = gasleft();
-        bytes memory params = abi.encode(msg.sender, cashAmount, borrowAmount);
+        bytes memory params = abi.encode(
+            OperationType.Leverage,
+            msg.sender,
+            cashAmount,
+            borrowAmount
+        );
         POOL.flashLoanSimple(
             address(this),
             asset,
@@ -346,6 +381,71 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         emit LeverageDeposit(msg.sender, asset, cashAmount, borrowAmount);
     }
 
+    struct MultiplierLocalVars {
+        address user;
+        uint256 cashAmount;
+        uint256 borrowAmount;
+        uint256 minDepositAmount;
+        address[] swapPath;
+    }
+
+    function multiplierDeposit(
+        address asset,
+        uint256 cashAmount,
+        uint256 borrowAmount,
+        address depositAsset,
+        uint256 minDepositAmount,
+        address[] calldata swapPath
+    ) external payable nonReentrant {
+        if (address(swapRouter) == address(0)) revert FeatureNotActive();
+        if (asset == depositAsset) revert InvalidParam();
+
+        if (asset == address(0)) {
+            if (cashAmount != msg.value) revert InvalidMsgValue();
+            WETH.deposit{value: cashAmount}();
+            asset = address(WETH);
+        } else {
+            if (msg.value != 0) revert InvalidMsgValue();
+            if (cashAmount > 0) {
+                IERC20(asset).safeTransferFrom(
+                    msg.sender,
+                    address(this),
+                    cashAmount
+                );
+            }
+        }
+
+        MultiplierLocalVars memory localVars;
+        localVars.user = msg.sender;
+        localVars.cashAmount = cashAmount;
+        localVars.borrowAmount = borrowAmount;
+        localVars.minDepositAmount = minDepositAmount;
+        localVars.swapPath = swapPath;
+
+        uint256 gasBegin = gasleft();
+        bytes memory params = abi.encode(OperationType.Multiplier, localVars);
+        POOL.flashLoanSimple(
+            address(this),
+            asset,
+            borrowAmount,
+            params,
+            referralCode
+        );
+        uint256 gasEnd = gasleft();
+        _addGasRefund(
+            gasBegin - gasEnd,
+            IGasRefund.RefundType.MULTIPLIERDEPOSIT
+        );
+
+        emit MultiplierDeposit(
+            msg.sender,
+            asset,
+            cashAmount,
+            borrowAmount,
+            depositAsset
+        );
+    }
+
     /// @inheritdoc IFlashLoanSimpleReceiver
     function executeOperation(
         address asset,
@@ -354,30 +454,86 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         address initiator,
         bytes calldata params
     ) external returns (bool) {
-        //decode param
-        (address user, uint256 cashAmount, uint256 borrowAmount) = abi.decode(
-            params,
-            (address, uint256, uint256)
-        );
+        OperationType operationType = abi.decode(params, (OperationType));
 
-        if (
-            msg.sender != address(POOL) ||
-            initiator != address(this) ||
-            borrowAmount != amount
-        ) revert InvalidFlashLoan();
+        if (operationType == OperationType.Leverage) {
+            //decode param
+            (address user, uint256 cashAmount, uint256 borrowAmount) = abi
+                .decode(params[32:], (address, uint256, uint256));
 
-        _checkApprove(asset);
+            if (
+                msg.sender != address(POOL) ||
+                initiator != address(this) ||
+                borrowAmount != amount
+            ) revert InvalidFlashLoan();
 
-        //supply asset
-        uint256 supplyAmount = cashAmount + borrowAmount - premium;
-        POOL.supply(asset, supplyAmount, user, referralCode);
+            _checkApprove(asset, address(POOL));
 
-        //borrow asset
-        POOL.borrow(asset, borrowAmount, 2, referralCode, user);
+            //supply asset
+            uint256 supplyAmount = cashAmount + borrowAmount - premium;
+            POOL.supply(asset, supplyAmount, user, referralCode);
 
-        //nothing need to do for repaying flash loan since we've approved asset.
+            //borrow asset
+            POOL.borrow(asset, borrowAmount, 2, referralCode, user);
 
-        return true;
+            //nothing need to do for repaying flash loan since we've approved asset.
+
+            return true;
+        } else if (operationType == OperationType.Multiplier) {
+            //decode param
+            MultiplierLocalVars memory localVars;
+            (operationType, localVars) = abi.decode(
+                params,
+                (OperationType, MultiplierLocalVars)
+            );
+
+            if (
+                msg.sender != address(POOL) ||
+                initiator != address(this) ||
+                localVars.borrowAmount != amount
+            ) revert InvalidFlashLoan();
+
+            //supply asset
+            _checkApprove(asset, address(swapRouter));
+            uint256 tokenInAmount = localVars.cashAmount +
+                localVars.borrowAmount -
+                premium;
+            uint[] memory amounts = swapRouter.swapExactTokensForTokens(
+                tokenInAmount,
+                localVars.minDepositAmount,
+                localVars.swapPath,
+                address(this),
+                block.timestamp
+            );
+
+            address supplyAsset = localVars.swapPath[
+                localVars.swapPath.length - 1
+            ];
+            _checkApprove(supplyAsset, address(POOL));
+            POOL.supply(
+                supplyAsset,
+                amounts[amounts.length - 1],
+                localVars.user,
+                referralCode
+            );
+
+            //borrow asset
+            POOL.borrow(
+                asset,
+                localVars.borrowAmount,
+                2,
+                referralCode,
+                localVars.user
+            );
+
+            //approve asset to repay flashloan
+            _checkApprove(asset, address(POOL));
+
+            return true;
+        }
+
+        //will revert in lending pool
+        return false;
     }
 
     /// @inheritdoc IFlashLoanSimpleReceiver
@@ -416,6 +572,10 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         gasRefund = _gasRefund;
     }
 
+    function setSwapRouter(address _swapRouter) external onlyOwner {
+        swapRouter = IUniswapV2Router02(_swapRouter);
+    }
+
     /**
      * @dev transfer ETH to an address, revert if it fails.
      * @param to recipient of the transfer
@@ -430,9 +590,9 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
      * @notice Approves token allowance for lending pool.
      * @param asset Address of the asset
      **/
-    function _checkApprove(address asset) internal {
-        if (IERC20(asset).allowance(address(this), address(POOL)) == 0) {
-            IERC20(asset).safeApprove(address(POOL), type(uint256).max);
+    function _checkApprove(address asset, address target) internal {
+        if (IERC20(asset).allowance(address(this), target) == 0) {
+            IERC20(asset).safeApprove(target, type(uint256).max);
         }
     }
 

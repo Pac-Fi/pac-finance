@@ -8,13 +8,53 @@ export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 makeSuite("Pac Pool Wrapper Test", (testEnv: TestEnv) => {
   let snapId: string;
   before(async () => {
-    const { weth, deployer, wrappedTokenGateway } = testEnv;
+    const {
+      weth,
+      usdc,
+      deployer,
+      wrappedTokenGateway,
+      uniswapFactory,
+      uniswapRouter,
+      poolWrapper,
+    } = testEnv;
 
     await wrappedTokenGateway
       .connect(deployer.signer)
       .depositETH(weth.address, deployer.address, 0, {
         value: parseEther("10"),
       });
+
+    await uniswapFactory
+      .connect(deployer.signer)
+      .createPair(weth.address, usdc.address);
+
+    //prepare asset
+    await weth.connect(deployer.signer).deposit({
+      value: parseEther("100"),
+    });
+    await usdc.connect(deployer.signer)["mint(uint256)"]("100000000000");
+
+    await weth
+      .connect(deployer.signer)
+      .approve(uniswapRouter.address, MAX_UINT_AMOUNT);
+    await usdc
+      .connect(deployer.signer)
+      .approve(uniswapRouter.address, MAX_UINT_AMOUNT);
+
+    await uniswapRouter
+      .connect(deployer.signer)
+      .addLiquidity(
+        weth.address,
+        usdc.address,
+        parseEther("100"),
+        "100000000000",
+        "0",
+        "0",
+        deployer.address,
+        "111111111111111111111"
+      );
+
+    await poolWrapper.setSwapRouter(uniswapRouter.address);
   });
 
   beforeEach(async () => {
@@ -214,6 +254,74 @@ makeSuite("Pac Pool Wrapper Test", (testEnv: TestEnv) => {
     );
   });
 
+  it("test weth multiplier deposit", async () => {
+    const { poolWrapper, deployer, weth, aWETH, debtWETH, usdc, aUsdc } =
+      testEnv;
+
+    await weth.connect(deployer.signer).deposit({ value: parseEther("1") });
+
+    await weth
+      .connect(deployer.signer)
+      .approve(poolWrapper.address, MAX_UINT_AMOUNT);
+    await debtWETH
+      .connect(deployer.signer)
+      .approveDelegation(poolWrapper.address, MAX_UINT_AMOUNT);
+
+    await poolWrapper
+      .connect(deployer.signer)
+      .multiplierDeposit(
+        weth.address,
+        parseEther("1"),
+        parseEther("1"),
+        usdc.address,
+        "1800000000",
+        [weth.address, usdc.address]
+      );
+
+    expect(await aWETH.balanceOf(deployer.address)).to.be.closeTo(
+      parseEther("10"),
+      parseEther("0.1")
+    );
+    expect(await aUsdc.balanceOf(deployer.address)).to.be.gt("1800000000");
+    expect(await debtWETH.balanceOf(deployer.address)).to.be.closeTo(
+      parseEther("1"),
+      parseEther("0.01")
+    );
+  });
+
+  it("test eth multiplier deposit", async () => {
+    const { poolWrapper, deployer, weth, aWETH, debtWETH, usdc, aUsdc } =
+      testEnv;
+
+    await debtWETH
+      .connect(deployer.signer)
+      .approveDelegation(poolWrapper.address, MAX_UINT_AMOUNT);
+
+    await poolWrapper
+      .connect(deployer.signer)
+      .multiplierDeposit(
+        ZERO_ADDRESS,
+        parseEther("1"),
+        parseEther("1"),
+        usdc.address,
+        "1800000000",
+        [weth.address, usdc.address],
+        {
+          value: parseEther("1"),
+        }
+      );
+
+    expect(await aWETH.balanceOf(deployer.address)).to.be.closeTo(
+      parseEther("10"),
+      parseEther("0.1")
+    );
+    expect(await aUsdc.balanceOf(deployer.address)).to.be.gt("1800000000");
+    expect(await debtWETH.balanceOf(deployer.address)).to.be.closeTo(
+      parseEther("1"),
+      parseEther("0.01")
+    );
+  });
+
   it("test rescue erc20", async () => {
     const { weth, poolWrapper, deployer } = testEnv;
 
@@ -264,8 +372,8 @@ makeSuite("Pac Pool Wrapper Test", (testEnv: TestEnv) => {
           parseEther("5"),
           poolWrapper.address,
           ethers.utils.defaultAbiCoder.encode(
-            ["address", "uint256", "uint256"],
-            [deployer.address, 0, parseEther("10")]
+            ["uint256", "address", "uint256", "uint256"],
+            [0, deployer.address, 0, parseEther("10")]
           )
         )
     ).to.be.revertedWithCustomError(poolWrapper, "InvalidFlashLoan");

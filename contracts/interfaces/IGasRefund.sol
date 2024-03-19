@@ -7,7 +7,8 @@ interface IGasRefund {
         WITHDRAW,
         BORROW,
         REPAY,
-        LEVERAGEDEPOSIT
+        LEVERAGEDEPOSIT,
+        MULTIPLIERDEPOSIT
     }
 
     function addGasRefund(
