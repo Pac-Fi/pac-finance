@@ -131,7 +131,7 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         uint256 gasBegin = gasleft();
         POOL.withdraw(address(WETH), amountToWithdraw, address(this));
         uint256 gasEnd = gasleft();
-        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.SUPPLY);
+        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.WITHDRAW);
 
         WETH.withdraw(amountToWithdraw);
         _safeTransferETH(to, amountToWithdraw);
@@ -168,7 +168,7 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         uint256 gasBegin = gasleft();
         POOL.repay(address(WETH), msg.value, rateMode, onBehalfOf);
         uint256 gasEnd = gasleft();
-        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.SUPPLY);
+        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.REPAY);
 
         // refund remaining dust eth
         if (msg.value > paybackAmount)
@@ -193,7 +193,7 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
             msg.sender
         );
         uint256 gasEnd = gasleft();
-        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.SUPPLY);
+        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.BORROW);
 
         WETH.withdraw(amount);
         _safeTransferETH(msg.sender, amount);
@@ -256,7 +256,7 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         uint256 gasBegin = gasleft();
         POOL.withdraw(asset, amountToWithdraw, to);
         uint256 gasEnd = gasleft();
-        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.SUPPLY);
+        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.WITHDRAW);
     }
 
     function borrowERC20(
@@ -267,7 +267,7 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         uint256 gasBegin = gasleft();
         POOL.borrow(asset, amount, interestRateMode, referralCode, msg.sender);
         uint256 gasEnd = gasleft();
-        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.SUPPLY);
+        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.BORROW);
 
         IERC20(asset).safeTransfer(msg.sender, amount);
     }
@@ -300,7 +300,7 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         uint256 gasBegin = gasleft();
         POOL.repay(asset, paybackAmount, interestRateMode, onBehalfOf);
         uint256 gasEnd = gasleft();
-        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.SUPPLY);
+        _addGasRefund(gasBegin - gasEnd, IGasRefund.RefundType.REPAY);
     }
 
     /**
