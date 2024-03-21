@@ -1,5 +1,6 @@
 import { eBlastNetwork, IAaveConfiguration } from "../../helpers/types";
 import {
+  strategyEZETH,
   strategyfwUSDB,
   strategyfwWETH,
   strategyOETH,
@@ -28,13 +29,14 @@ export const BlastMarket: IAaveConfiguration = {
   SymbolPrefix: "",
   upgradeAdmin: "0xf2B18c20Ed5E5a6ABB15377D619C1879639339AD",
   ReservesConfig: {
-    WETH: strategyWETH,
-    USDB: strategyUSDB,
-    fwWETH: strategyfwWETH,
-    fwUSDB: strategyfwUSDB,
-    RingLPWETHUSDB: strategyRingLPWETHUSDB,
-    oEther: strategyOETH,
-    oUSDB: strategyOUSDB,
+    // WETH: strategyWETH,
+    // USDB: strategyUSDB,
+    // fwWETH: strategyfwWETH,
+    // fwUSDB: strategyfwUSDB,
+    // RingLPWETHUSDB: strategyRingLPWETHUSDB,
+    // oEther: strategyOETH,
+    // oUSDB: strategyOUSDB,
+    ezETH: strategyEZETH,
   },
   ReserveAssets: {
     [eBlastNetwork.main]: {
@@ -45,6 +47,7 @@ export const BlastMarket: IAaveConfiguration = {
       RingLPWETHUSDB: "0x9BE8a40C9cf00fe33fd84EAeDaA5C4fe3f04CbC3",
       oEther: "0x0872b71efc37cb8dde22b2118de3d800427fdba0",
       oUSDB: "0x9aECEdCD6A82d26F2f86D331B17a1C1676442A87",
+      ezETH: "0x2416092f143378750bb29b79ed961ab195cceea5",
     },
     [eBlastNetwork.testnet]: {
       WETH: "0x4200000000000000000000000000000000000023",
@@ -56,6 +59,7 @@ export const BlastMarket: IAaveConfiguration = {
       RingLPWETHUSDB: "0x23cb0155437a331545A555164e297B3EC318c1b1",
       oEther: "0x046e66335FadceE7B065D792eBD4Dd753Bb682Cc",
       oUSDB: "0xe2d411df046ec8CeB01e97ecbF669383d6A716ad",
+      ezETH: "0x878e427D1a6949F2e014720e3752ECF041EDc442",
     },
   },
   ChainlinkAggregator: {
@@ -67,6 +71,7 @@ export const BlastMarket: IAaveConfiguration = {
       RingLPWETHUSDB: "0x741d8B79eeEe07A3452E151341f5458469a95430",
       oEther: "0x48e0b6c0AF2BB1990f0c7d29F157e4A0cb85C40B",
       oUSDB: "0x6996D76d47123D0B7E8ebBC48F6CD728FE4341D7",
+      ezETH: "0x7FbFbe6CA0261c8485652F05d8277aCF711D99DB",
     },
     [eBlastNetwork.testnet]: {
       WETH: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",
@@ -78,6 +83,7 @@ export const BlastMarket: IAaveConfiguration = {
       RingLPWETHUSDB: "0x4f189E510c2BA49fA4cBEB45881fF593333B4487",
       oEther: "0xE48B50Dbe5B17C8f7f401640E4d33336066dAAAE",
       oUSDB: "0x00b90a6805324a11E24EfA8a9021ABf64e31Ffc6",
+      ezETH: "0xce2952fd1339C7DA179e263f4bb49D968cE33e76",
     },
   },
 };

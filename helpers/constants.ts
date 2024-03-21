@@ -60,6 +60,7 @@ export const ZERO_BYTES_32 =
   "0x0000000000000000000000000000000000000000000000000000000000000000";
 
 export const MOCK_CHAINLINK_AGGREGATORS_PRICES: { [key: string]: string } = {
+  ezETH: parseUnits("3600", 8).toString(),
   AAVE: parseUnits("300", 8).toString(),
   WETH: parseUnits("2600", 8).toString(),
   ETH: parseUnits("2600", 8).toString(),
