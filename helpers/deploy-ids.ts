@@ -51,3 +51,4 @@ export const Fixed_Price_Oracle_Wrapper =
 export const CToken_Price_Oracle_Wrapper = "ExchangeRateAssetPriceAdapter";
 export const UniswapV2_Factory = "UniswapV2Factory";
 export const UniswapV2_Router02 = "UniswapV2Router02";
+export const Yield_GAS_Controller = "YieldGasController";

@@ -165,4 +165,15 @@ interface IAToken is IERC20, IScaledBalanceToken, IInitializableAToken {
         address blastPoints,
         address pointsOperator
     ) external;
+
+    /**
+     * @notice Claim blast native yield
+     * @param recipient The address to receive yield
+     */
+    function claimYield(address recipient) external;
+
+    /**
+     * @notice Get yield distributor contract address
+     */
+    function yieldDistributor() external view returns (address);
 }

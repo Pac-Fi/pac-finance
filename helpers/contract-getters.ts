@@ -12,6 +12,7 @@ import {
   Ownable__factory,
   PacPoolWrapper,
   StakedTokenTransferStrategy,
+  YieldGasController,
 } from "./../typechain";
 import { PullRewardsTransferStrategy } from "./../typechain";
 import {
@@ -71,6 +72,7 @@ import {
   PAC_POOL_WRAPPER,
   GAS_REFUND_PROXY,
   Native_Yield_Distribute_Proxy,
+  Yield_GAS_Controller,
 } from "./deploy-ids";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { RewardsController } from "../typechain";
@@ -84,7 +86,7 @@ import { EmissionManager } from "../typechain";
 declare var hre: HardhatRuntimeEnvironment;
 
 export const getTreasury = async (address: tEthereumAddress): Promise<AToken> =>
-    getContract("AToken", address);
+  getContract("AToken", address);
 
 export const getAToken = async (address: tEthereumAddress): Promise<AToken> =>
   getContract("AToken", address);
@@ -168,6 +170,14 @@ export const getGasRefund = async (
   getContract(
     "GasRefund",
     address || (await hre.deployments.get(GAS_REFUND_PROXY)).address
+  );
+
+export const getYieldGasController = async (
+  address?: tEthereumAddress
+): Promise<YieldGasController> =>
+  getContract(
+    "YieldGasController",
+    address || (await hre.deployments.get(Yield_GAS_Controller)).address
   );
 
 export const getNativeYieldDistribute = async (
