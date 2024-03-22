@@ -7,6 +7,8 @@ import {
   strategyOUSDB,
   strategyPUMP,
   strategyRingLPWETHUSDB,
+  strategySLPETH,
+  strategySLPUSDB,
   strategyUSDB,
   strategyWBTC,
   strategyWETH,
@@ -36,7 +38,9 @@ export const BlastMarket: IAaveConfiguration = {
     // RingLPWETHUSDB: strategyRingLPWETHUSDB,
     // oEther: strategyOETH,
     // oUSDB: strategyOUSDB,
-    ezETH: strategyEZETH,
+    // ezETH: strategyEZETH,
+    slpUSDB: strategySLPUSDB,
+    slpETH: strategySLPETH,
   },
   ReserveAssets: {
     [eBlastNetwork.main]: {
@@ -48,6 +52,8 @@ export const BlastMarket: IAaveConfiguration = {
       oEther: "0x0872b71efc37cb8dde22b2118de3d800427fdba0",
       oUSDB: "0x9aECEdCD6A82d26F2f86D331B17a1C1676442A87",
       ezETH: "0x2416092f143378750bb29b79ed961ab195cceea5",
+      slpUSDB: "0x56e0f6DF03883611C9762e78d4091E39aD9c420E",
+      slpETH: "0x3D4621fa5ff784dfB2fcDFd5B293224167F239db",
     },
     [eBlastNetwork.testnet]: {
       WETH: "0x4200000000000000000000000000000000000023",
@@ -72,6 +78,8 @@ export const BlastMarket: IAaveConfiguration = {
       oEther: "0x48e0b6c0AF2BB1990f0c7d29F157e4A0cb85C40B",
       oUSDB: "0x6996D76d47123D0B7E8ebBC48F6CD728FE4341D7",
       ezETH: "0x7FbFbe6CA0261c8485652F05d8277aCF711D99DB",
+      slpUSDB: "0xdAeF9Eee69969C021cB677E2A7f7cA1F51589C97",
+      slpETH: "0x9E2e2024F3Dcf7377257FC7F2dE05d39c807186C",
     },
     [eBlastNetwork.testnet]: {
       WETH: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",

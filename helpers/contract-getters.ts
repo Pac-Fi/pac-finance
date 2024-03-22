@@ -4,6 +4,7 @@ import {
   IBlast,
   ICLSynchronicityPriceAdapter,
   ICToken,
+  IDTXVault,
   IERC20Rebasing,
   IPyth,
   MockAggregator,
@@ -163,6 +164,10 @@ export const getPool = async (address?: tEthereumAddress): Promise<Pool> =>
     "Pool",
     address || (await hre.deployments.get(POOL_PROXY_ID)).address
   );
+
+export const getDTXVault = async (
+  address: tEthereumAddress
+): Promise<IDTXVault> => getContract("IDTXVault", address);
 
 export const getGasRefund = async (
   address?: tEthereumAddress

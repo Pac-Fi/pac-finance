@@ -77,6 +77,44 @@ export const strategyEZETH: IReserveParams = {
   nativeYield: false,
 };
 
+export const strategySLPUSDB: IReserveParams = {
+  strategy: rateStrategyVolatileOne,
+  baseLTVAsCollateral: "0",
+  liquidationThreshold: "0",
+  liquidationBonus: "0",
+  liquidationProtocolFee: "1000",
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  flashLoanEnabled: true,
+  reserveDecimals: "18",
+  aTokenImpl: eContractid.AToken,
+  reserveFactor: "1000",
+  supplyCap: "0",
+  borrowCap: "0",
+  debtCeiling: "0",
+  borrowableIsolation: false,
+  nativeYield: false,
+};
+
+export const strategySLPETH: IReserveParams = {
+  strategy: rateStrategyVolatileOne,
+  baseLTVAsCollateral: "0",
+  liquidationThreshold: "0",
+  liquidationBonus: "0",
+  liquidationProtocolFee: "1000",
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  flashLoanEnabled: true,
+  reserveDecimals: "18",
+  aTokenImpl: eContractid.AToken,
+  reserveFactor: "1000",
+  supplyCap: "0",
+  borrowCap: "0",
+  debtCeiling: "0",
+  borrowableIsolation: false,
+  nativeYield: false,
+};
+
 export const strategyfwWETH: IReserveParams = {
   strategy: rateStrategyVolatileOne,
   baseLTVAsCollateral: "7000",
@@ -153,9 +191,9 @@ export const strategyPUMP: IReserveParams = {
 
 export const strategyOETH: IReserveParams = {
   strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: "0",
-  liquidationThreshold: "0",
-  liquidationBonus: "0",
+  baseLTVAsCollateral: "6000",
+  liquidationThreshold: "7250",
+  liquidationBonus: "10500",
   liquidationProtocolFee: "1000",
   borrowingEnabled: true,
   stableBorrowRateEnabled: false,
@@ -172,9 +210,9 @@ export const strategyOETH: IReserveParams = {
 
 export const strategyOUSDB: IReserveParams = {
   strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: "0",
-  liquidationThreshold: "0",
-  liquidationBonus: "0",
+  baseLTVAsCollateral: "7000",
+  liquidationThreshold: "7500",
+  liquidationBonus: "10500",
   liquidationProtocolFee: "1000",
   borrowingEnabled: true,
   stableBorrowRateEnabled: false,

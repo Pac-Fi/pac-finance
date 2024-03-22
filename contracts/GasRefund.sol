@@ -12,11 +12,11 @@ import {IPool} from "./core-v3/contracts/interfaces/IPool.sol";
 contract GasRefund is Initializable, OwnableUpgradeable {
     using PercentageMath for uint256;
 
-    address public immutable POOL_WRAPPER;
     address public immutable BLAST;
 
     mapping(address => uint256) private _balances;
     mapping(IGasRefund.RefundType => uint256) private _refundRatio;
+    address public POOL_WRAPPER;
 
     error AddressZero();
 
@@ -82,6 +82,14 @@ contract GasRefund is Initializable, OwnableUpgradeable {
 
     function claimRefundedGas(address recipient) external onlyOwner {
         IBlast(BLAST).claimMaxGas(address(this), recipient);
+    }
+
+    function setPoolWrapper(address _poolWrapper) external {
+        require(
+            POOL_WRAPPER == address(0) || owner() == _msgSender(),
+            "Ownable: caller is not the owner"
+        );
+        POOL_WRAPPER = _poolWrapper;
     }
 
     receive() external payable {}
