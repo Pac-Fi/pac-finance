@@ -149,12 +149,7 @@ contract DefaultReserveInterestRateStrategy is IDefaultInterestRateStrategy {
     }
 
     /// @inheritdoc IDefaultInterestRateStrategy
-    function getMaxVariableBorrowRate()
-        public
-        view
-        override
-        returns (uint256)
-    {
+    function getMaxVariableBorrowRate() public view override returns (uint256) {
         return
             _baseVariableBorrowRate + _variableRateSlope1 + _variableRateSlope2;
     }

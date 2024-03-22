@@ -90,5 +90,4 @@ contract GasRefund is Initializable, OwnableUpgradeable {
         (bool success, ) = to.call{value: value}(new bytes(0));
         require(success, "ETH_TRANSFER_FAILED");
     }
-
 }

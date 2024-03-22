@@ -6,7 +6,10 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import {ICToken} from "./interfaces/ICToken.sol";
 
-contract ExchangeRateAssetPriceAdapter is Ownable, ICLSynchronicityPriceAdapter {
+contract ExchangeRateAssetPriceAdapter is
+    Ownable,
+    ICLSynchronicityPriceAdapter
+{
     using SafeCast for uint256;
     ICLSynchronicityPriceAdapter public immutable underlyingAssetOracle;
     address public immutable cToken;
@@ -18,7 +21,9 @@ contract ExchangeRateAssetPriceAdapter is Ownable, ICLSynchronicityPriceAdapter 
         address _cToken,
         uint8 _decimals
     ) {
-        underlyingAssetOracle = ICLSynchronicityPriceAdapter(_underlyingAssetOracle);
+        underlyingAssetOracle = ICLSynchronicityPriceAdapter(
+            _underlyingAssetOracle
+        );
         cToken = _cToken;
         DECIMALS = _decimals;
         cTokenExchangeRate = ICToken(cToken).exchangeRateStored().toInt256();
@@ -31,7 +36,7 @@ contract ExchangeRateAssetPriceAdapter is Ownable, ICLSynchronicityPriceAdapter 
     /// @inheritdoc ICLSynchronicityPriceAdapter
     function latestAnswer() public view virtual override returns (int256) {
         int256 underlyingPrice = underlyingAssetOracle.latestAnswer();
-        return underlyingPrice * cTokenExchangeRate / 1e18;
+        return (underlyingPrice * cTokenExchangeRate) / 1e18;
     }
 
     function decimals() external view returns (uint8) {

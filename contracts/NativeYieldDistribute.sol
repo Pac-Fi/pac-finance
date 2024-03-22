@@ -10,7 +10,12 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {IScaledBalanceToken} from "./core-v3/contracts/interfaces/IScaledBalanceToken.sol";
 import {IBlast} from "./interfaces/IBlast.sol";
 
-contract NativeYieldDistribute is Initializable, OwnableUpgradeable, PausableUpgradeable, ReentrancyGuardUpgradeable {
+contract NativeYieldDistribute is
+    Initializable,
+    OwnableUpgradeable,
+    PausableUpgradeable,
+    ReentrancyGuardUpgradeable
+{
     using SafeERC20 for IERC20;
 
     event YieldDistributed(uint256 amount, uint256 timestamp);
@@ -54,7 +59,10 @@ contract NativeYieldDistribute is Initializable, OwnableUpgradeable, PausableUpg
         BLAST = _blast;
     }
 
-    function initialize(address _aToken, address _yieldToken) public initializer {
+    function initialize(
+        address _aToken,
+        address _yieldToken
+    ) public initializer {
         __Ownable_init();
         __Pausable_init();
         __ReentrancyGuard_init();

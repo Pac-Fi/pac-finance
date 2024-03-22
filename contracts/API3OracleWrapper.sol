@@ -22,7 +22,10 @@ contract API3OracleWrapper is Ownable, ICLSynchronicityPriceAdapter {
     /// @inheritdoc ICLSynchronicityPriceAdapter
     function latestAnswer() public view virtual override returns (int256) {
         (int224 value, uint256 timestamp) = IProxy(proxyAddress).read();
-        require(block.timestamp - timestamp < validityDuration, "price expired");
+        require(
+            block.timestamp - timestamp < validityDuration,
+            "price expired"
+        );
         //convert decimals, api3 decimal is 18
         int256 convertedValue = int256(value) / 1e10;
         return convertedValue;

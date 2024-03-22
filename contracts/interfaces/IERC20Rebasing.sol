@@ -22,5 +22,7 @@ interface IERC20Rebasing {
         address account
     ) external view returns (uint256);
 
-    function getConfiguration(address account) external view returns (YieldMode);
+    function getConfiguration(
+        address account
+    ) external view returns (YieldMode);
 }
