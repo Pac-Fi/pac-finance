@@ -153,7 +153,7 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
         uint256 amount,
         uint256 rate
     ) external virtual override onlyPool returns (bool, uint256, uint256) {
-        revert('STABLE_BORROWING_DEPRECATED');
+        revert("STABLE_BORROWING_DEPRECATED");
     }
 
     /// @inheritdoc IStableDebtToken

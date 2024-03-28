@@ -5,8 +5,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import "@api3/contracts/v0.8/interfaces/IProxy.sol";
 import {ICLSynchronicityPriceAdapter} from "./interfaces/ICLSynchronicityPriceAdapter.sol";
 
-contract ezETHOracle is Ownable, ICLSynchronicityPriceAdapter
-{
+contract ezETHOracle is Ownable, ICLSynchronicityPriceAdapter {
     address public immutable ethProxy;
     address public immutable exchangeRateProxy;
 
@@ -37,7 +36,9 @@ contract ezETHOracle is Ownable, ICLSynchronicityPriceAdapter
         );
 
         //convert decimals, api3 decimal is 18
-        int256 convertedValue = int256(value) * int256(exchangeRate)/ 1e18 / 1e10;
+        int256 convertedValue = (int256(value) * int256(exchangeRate)) /
+            1e18 /
+            1e10;
         return convertedValue;
     }
 

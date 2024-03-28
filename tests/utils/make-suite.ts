@@ -198,13 +198,13 @@ export async function initializeMakeSuite() {
   testEnv.debtWETH = await getVariableDebtToken(variableDebtAddress);
 
   const usdcAddress = reservesTokens.find(
-      (token) => token.symbol === "USDC"
+    (token) => token.symbol === "USDC"
   )?.tokenAddress;
   const aUsdcAddress = allTokens.find(
-      (aToken) => aToken.symbol === "aTestUSDC"
+    (aToken) => aToken.symbol === "aTestUSDC"
   )?.tokenAddress;
   const { variableDebtTokenAddress: usdcVariableDebtAddress } =
-      await testEnv.helpersContract.getReserveTokensAddresses(usdcAddress!);
+    await testEnv.helpersContract.getReserveTokensAddresses(usdcAddress!);
   testEnv.aUsdc = await getAToken(aUsdcAddress!);
   testEnv.usdc = await getMintableERC20(usdcAddress!);
   testEnv.debtUsdc = await getVariableDebtToken(usdcVariableDebtAddress);
@@ -221,6 +221,7 @@ export async function initializeMakeSuite() {
     gasRefund.abi,
     gasRefundProxy.address
   )) as GasRefund;
+  await testEnv.gasRefund.setPoolWrapper(poolWrapper.address);
 
   const yieldDistribute = await deployments.get(Native_Yield_Distribute_IMPL);
   const yieldAddress = await testEnv.aWETH.yieldDistributor();
