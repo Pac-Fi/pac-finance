@@ -399,6 +399,8 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
     ) external payable nonReentrant {
         if (address(swapRouter) == address(0)) revert FeatureNotActive();
         if (asset == depositAsset) revert InvalidParam();
+        if (depositAsset != swapPath[swapPath.length - 1])
+            revert InvalidParam();
 
         if (asset == address(0)) {
             if (cashAmount != msg.value) revert InvalidMsgValue();
